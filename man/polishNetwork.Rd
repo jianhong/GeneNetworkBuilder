@@ -1,0 +1,45 @@
+\name{polishNetwork}
+\alias{polishNetwork}
+\title{generate an object of grahpNEL to represent the regulation network}
+\description{
+	generate an object of grahpNEL to represent the regulation network. Each node will has 
+three attributes: size, borderColor and fill.
+}
+\usage{
+polishNetwork(cifNetwork, 
+				nodesDefaultSize=48, useLogFCAsWeight=FALSE, 
+				nodecolor=colorRampPalette(c("green", "yellow", "red"))(5), nodeBg="white",
+				nodeBorderColor=list(gene='darkgreen',miRNA='darkblue'), 
+				edgelwd=0.25, ...)
+}
+\arguments{
+\item{cifNetwork}{dataframe used to draw network graph. column names of cifNetwork must contain
+ 'from', 'to', 'logFC' and 'miRNA'}
+\item{nodesDefaultSize}{nodes default size}
+\item{useLogFCAsWeight}{how to determine the weights for each nodes. If TURE, use logFC 
+value as weight. If FALSE, use constant 1 as weight.}
+\item{nodecolor}{a character vector of color set. The node color will be mapped to color set by log fold change}
+\item{nodeBg}{background of node}
+\item{nodeBorderColor}{a list of broder node color set. nodeBorderColor's element must be gene and miRNA}
+\item{edgelwd}{the width of edge}
+\item{...}{any parameters can be passed to \link[graph:graph.par]{graph.par}}
+}
+\value{
+	An object of graphNEL class of the network
+}
+\examples{
+	data("ce.miRNA.map")
+	data("example.data")
+	data("ce.interactionmap")
+	data("ce.IDsMap")
+	sifNetwork<-buildNetwork(example.data$ce.bind, ce.interactionmap, level=2)
+	cifNetwork<-filterNetwork(rootgene=ce.IDsMap["DAF-16"], sifNetwork=sifNetwork, 
+					exprsData=uniqueExprsData(example.data$ce.exprData, "Max", condenseName='logFC'),
+					mergeBy="symbols",
+					miRNAlist=as.character(ce.miRNA.map[ , 1]), tolerance=1)
+	gR<-polishNetwork(cifNetwork)
+##	g1<-Rgraphviz::layoutGraph(gR)
+##	renderGraph(g1)
+##	cat(saveXML(toGXL(g1)),sep="\n")
+}
+\keyword{network}

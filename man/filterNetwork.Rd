@@ -1,0 +1,41 @@
+\name{filterNetwork}
+\alias{filterNetwork}
+\title{filter the regulatory network table by expression profile}
+\description{
+verify every nodes in the regulatory network by expression profile.
+}
+\usage{
+filterNetwork(rootgene, sifNetwork, exprsData, mergeBy="symbols",
+		miRNAlist, remove_miRNA=FALSE, tolerance=0, cutoffPVal=0.01, cutoffLFC=0.5,
+		minify=TRUE, miRNAtol=FALSE)
+}
+\arguments{
+\item{rootgene}{name of root gene. It must be the ID used in xx regulatory network}
+\item{sifNetwork}{Transcription regulatory network table. Column names of xx must
+ be 'from','to'}
+\item{exprsData}{dataset of expression comparison data, which should contain column logFC and column given by exprsDataByName}
+\item{mergeBy}{The column name contains ID information used to merge with 'to' column of sifNetwork
+ in exprsData}
+\item{miRNAlist}{vector of microRNA ids.}
+\item{remove_miRNA}{remove miRNA from the network or not. Bool value, TRUE or FALSE}
+\item{tolerance}{maximum number of unverified nodes in each path}
+\item{cutoffPVal}{cutoff p value of valid differential expressed gene/miRNA}
+\item{cutoffLFC}{cutoff log fold change value of a valid differential expressed gene/miRNA}
+\item{minify}{Only keep the best path if multiple paths exists for single node? Bool value, TRUE or FALSE}
+\item{miRNAtol}{take miRNA expression into account for tolerance calculation. Bool value, TRUE or FALSE}
+}
+\value{
+ a dataframe of filtered regulatory network by expression profile
+}
+\examples{
+data("ce.miRNA.map")
+data("example.data")
+data("ce.interactionmap")
+data("ce.IDsMap")
+sifNetwork<-buildNetwork(example.data$ce.bind, ce.interactionmap, level=2)
+cifNetwork<-filterNetwork(rootgene=ce.IDsMap["DAF-16"], sifNetwork=sifNetwork, 
+					exprsData=uniqueExprsData(example.data$ce.exprData, "Max", condenseName='logFC'),
+					mergeBy="symbols",
+					miRNAlist=as.character(ce.miRNA.map[ , 1]), tolerance=1)
+}
+\keyword{network}

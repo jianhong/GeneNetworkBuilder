@@ -1,0 +1,33 @@
+\name{example.data}
+\alias{example.data}
+\docType{data}
+\title{
+  example datasets for documentation
+}
+\description{
+  example.data is a data list of example datasets.
+  There is a dataset example.microarrayData, which is the example of gene expression data of a gene-chip result of \emph{C.elegans}.
+  Dataset example.data$ce.bind is a TF binding matrix of ChIP-chip experiment of \emph{C.elegans}.
+  Dataset example.data$cd.exprData is expression data of a gene-chip result  of \emph{C.elegans}.
+  Dataset example.data$hs.bind is a TF binding matrix of ChIP-chip experiment of \emph{H.sapiens}.
+  Dataset example.data$hs.exprData is expression data of a combination of a gene-chip result and a RNA-SEQ result of \emph{H.sapiens}.
+}
+\usage{data(example.data)}
+\format{
+   dataframe
+}
+\details{
+	The dataset example.microarrayData contains columns: ID, logFC, AveExpr, t, P.Value, adj.P.Val, B, genes and symbols. The columns of ID, logFC and symbols are required by GeneNetworkBuilder.
+	The dataset example.data$hs.bind contains columns: ID, symbols, logFC and P.Value.
+	The dataset example.data$hs.exprData contains columns: from and to.
+}
+\examples{
+data(example.data)
+names(example.data)
+head(example.data$example.microarrayData)
+head(example.data$ce.bind)
+head(example.data$ce.exprData)
+head(example.data$hs.bind)
+head(example.data$hs.exprData)
+}
+\keyword{datasets}
