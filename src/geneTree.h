@@ -10,7 +10,7 @@
 #ifndef GENETREE_H_H
 #define GENETREE_H_H
 
-#include <string>
+#include <cstring>
 #include <cmath>
 #include <vector>
 #include <map>

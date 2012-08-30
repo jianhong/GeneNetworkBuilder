@@ -35,7 +35,7 @@ bool cmp_ch::operator()(const char* a, const char* b){
 bool GTree::find(const char* s,vector<node*> vec){
 	vector<node*>::iterator it;
 	for (it=vec.begin(); it!=vec.end(); it++) {
-		if (strcmp((*it)->name,s)==0) {
+		if (std::strcmp((*it)->name,s)==0) {
 			return true;
 		}
 	}
@@ -159,7 +159,7 @@ void GTree::Remove(node *n){
 				vector<node*> *chd = (*it)->chd;
 				vector<node*>::iterator it1;
 				for (it1=(*chd).begin(); it1!=(*chd).end(); it1++) {
-					if (strcmp((*it1)->name,n->name)==0){
+					if (std::strcmp((*it1)->name,n->name)==0){
 						(*chd).erase(it1);
 						break;
 					}
@@ -174,7 +174,7 @@ void GTree::Remove(node *n){
 				vector<node*> *par = (*it)->par;
 				vector<node*>::iterator it1;
 				for (it1=(*par).begin(); it1!=(*par).end(); it1++) {
-					if (strcmp((*it1)->name,n->name)==0){
+					if (std::strcmp((*it1)->name,n->name)==0){
 						(*par).erase(it1);
 						break;
 					}
@@ -238,7 +238,7 @@ void GTree::verifyFilter(int tolerance){
 			} else {
 				if (cur->chd->size()==1) {
 					//is the node has only one child and the child point to itself?
-					if(strcmp((*cur->chd)[0]->name,cur->name)==0) isLeaf = true;
+					if(std::strcmp((*cur->chd)[0]->name,cur->name)==0) isLeaf = true;
 					else {//is this node is the extra node for other path?
 						int next_step_tolerance = checkFC((*cur->chd)[0]) ? 0 : 1;
 						if((*cur->chd)[0]->miRNA && !miRNAcnt4Tol) next_step_tolerance = 0;
@@ -253,7 +253,7 @@ void GTree::verifyFilter(int tolerance){
 		if(isLeaf) {
 			// remove the node if the logFC==0
 			if (!checkFC(cur)) {
-				if (strcmp(cur->name,root->name)!=0) {
+				if (std::strcmp(cur->name,root->name)!=0) {
 					if (vit!=t.end()) t.erase(vit);
 					Remove(cur);
 					remove = true;
@@ -263,7 +263,7 @@ void GTree::verifyFilter(int tolerance){
 		} else {
 			// remove the node with tolerance > threhold
 			if (cur->tol > tolerance) {
-				if (strcmp(cur->name,root->name)!=0) {
+				if (std::strcmp(cur->name,root->name)!=0) {
 					if (vit!=t.end()) t.erase(vit);
 					Remove(cur);
 					remove = true;
