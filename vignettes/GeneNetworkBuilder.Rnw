@@ -70,7 +70,7 @@ its role in GNB.
 
 \begin{figure}[htb]
 \centering
-\includegraphics{workflow.eps}
+\includegraphics{workflow}
 \caption{workflow of GeneNetworkBuilder}
 \label{fig:workflow}
 \end{figure}
@@ -167,7 +167,7 @@ sp.between(gR,"daf-16","lam-2")
 
 \begin{figure}[htb]
 \centering
-\includegraphics{ce_example.eps}
+\includegraphics{ce_example}
 \caption{Regulatory network of a fully working example}
 \label{fig:example_results}
 \end{figure}
@@ -210,7 +210,7 @@ network for \textit{H. sapiens}. The data was downloaded from \href{http://www.n
 
 \begin{figure}[htb]
 \centering
-\includegraphics{hs_sample_rcytoscape.eps}
+\includegraphics{hs_sample_rcytoscape}
 \caption{The SOX2 regulatory network.}
 \label{fig:sox2_results}
 \end{figure}

@@ -1,6 +1,6 @@
 Package: GeneNetworkBuilder
 Type: Package
-Version: 0.99.20
+Version: 0.99.21
 Date: 2012-08-31
 Title: Using ChIP-X and Microarray data to build regulation network
 Authors@R: c(person("Jianhong Ou", "Developer", role = c("aut", "cre"),
