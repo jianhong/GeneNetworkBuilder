@@ -8,6 +8,7 @@
 \usepackage{fullpage}
 \usepackage[numbers]{natbib}
 \usepackage{graphicx}
+\usepackage{epstopdf}
 \usepackage{tikz}
 \bibliographystyle{plainnat}
 
