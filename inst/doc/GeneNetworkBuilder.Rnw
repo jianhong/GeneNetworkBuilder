@@ -18,7 +18,7 @@
 
 \author{Jianhong Ou\footnote{jianhong.ou@umassmed.edu}, Lihua Julie Zhu\footnote{Julie.Zhu@umassmed.edu}}
 \begin{document}
-\title{GeneNetworkBuilder guide}
+\title{GeneNetworkBuilder Guide}
 
 \maketitle
 
@@ -26,7 +26,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 Transcription factors (TFs), chromatin modifications and microRNAs (miRNAs) are  
-important parts in regulating gene expression\cite{Walhout2010}. 
+important in regulating gene expression\cite{Walhout2010}. 
 Chromatin immunoprecipitation (ChIP) followed by
 high-throughput sequencing (ChIP-seq)\cite{Peter2009} or genome tiling
 array analysis (ChIP-chip)\cite{Tae2006} are widely used 
@@ -46,8 +46,8 @@ TF -> gene, TF -> miRNA, or miRNA -> gene where a -> b represents "a
 regulates b". 
 
 \section{Examples of using GeneNetworkBuilder}
-To use GNB, users need to input a list of candidates genes bound by a given
-TF and another list of genes/miRNAs with altered expression by knockdown of the
+To use GNB, users need to input a list of genes bound by a given
+TF and another list of genes/miRNAs with altered expression by knockdown/knockout of the
 same TF. The bound gene list could be obtained from ChIP-seq or ChIP-chip
 experiment. The gene list with altered expression are from RNA-seq or
 expression microarray experiment.  ChIP experiments and expression
@@ -56,15 +56,15 @@ such as tissue type, development stage etc.  In addition, users need to
 select a TF regulatory network from GNB or upload customized TF regulatory
 network.
 
-GNB provides two embeddedded regulatory networks. One is designed for \textit{Caenorhabditis elegans}
+GNB provides two embedded regulatory networks. One is designed for \textit{Caenorhabditis elegans}
 combining database EDGEdb\cite{Barrasa2007} and microCosm Targets\cite{Sam2008}. Database
 MicroCosm Targets contains computationally predicted targets for miRNAs
 across many species. EDGEdb contains experimentally determined interactions
 of $\sim$934 worm TFs by high-throughput yeast on-hybrid (Y1H) assay. And the
-other one is designed for \textit{Homo sapiens} combining database FANTOM\cite{Ravasi2010},
-miRGen\cite{Panagiotis2010} and microCosm Targets\cite{Sam2008}. FANTOM screened for physical
+other embedded regulatory network is designed for \textit{Homo sapiens} combining database FANTOM\cite{Ravasi2010},
+miRGen\cite{Panagiotis2010} and microCosm Targets\cite{Sam2008}. FANTOM stores physical
 interactions among the majority of human/mouse DNA-binding TFs. The miRGen
-is an integrated database of miRNA coding transcripts, their regulation by TFs and miRNA targets. 
+is an integrated database of miRNA regulation by TFs and miRNA targets mainly for human. 
 Figure\ref{fig:workflow} depicts the relationships of various databases and
 its role in GNB.
 
@@ -79,11 +79,10 @@ its role in GNB.
 Here is an example to use GNB to generate a simple regulatory network for \textit{C. elegans}.
 There are three steps, 
 \begin{enumerate}
-	\item buildNetwork, build the network starting from the bound gene list and then 
-iterating downstream regulatory events in GNB-embedded or user-defined regulatory network.
+	\item buildNetwork, build the network by GNB-embedded or user-defined regulatory network 
+starting from the bound gene list.
 	\item filterNetwork, filter the network by differential expressed genes/miRNAs. 
-	\item polishNetwork, generate the graphNEL object with a given color set and parameters 
-can be passed to graph:graph.par.
+	\item polishNetwork, generate the graphNEL object with display style.
 \end{enumerate}
 
 \begin{scriptsize}
@@ -94,24 +93,24 @@ library(GeneNetworkBuilder)
 data("ce.miRNA.map")
 ##load GNB-embedded regulatory network of C. elegans.
 data("ce.interactionmap")
-##load datas required
+##load data required
 data("example.data")
 ##build the network by binding list and interaction map
 sifNetwork<-buildNetwork(TFbindingTable=example.data$ce.bind, 
-							interactionmap=ce.interactionmap, level=2)
+                        interactionmap=ce.interactionmap, level=2)
 ##filter the network by expression data
 cifNetwork<-filterNetwork(rootgene="WBGene00000912", sifNetwork=sifNetwork, 
-					exprsData=uniqueExprsData(example.data$ce.exprData, "Max", condenseName='logFC'), 
-					mergeBy="symbols",
+                    exprsData=uniqueExprsData(example.data$ce.exprData), 
+                    mergeBy="symbols",
                     miRNAlist=as.character(ce.miRNA.map[ , 1]), 
                     remove_miRNA=FALSE, tolerance=1)
 ##generate graphNEL object for the network
-gR<-polishNetwork(cifNetwork=cifNetwork)
+gR<-polishNetwork(cifNetwork=cifNetwork, nodecolor=colorRampPalette(c("green", "yellow", "red"))(5))
 @
 \end{scriptsize}
 
-\subsection{A fully working example}
-Here is a fully working example to use GNB to generate a simple regulatory network for 
+\subsection{Example using gene expression profile}
+Here is an example to use GNB to generate a simple regulatory network for 
 \textit{C. elegans}. And also show some examples how to use the \textit{graphNEL} object 
 for further analysis.
 
@@ -130,14 +129,14 @@ bind<-convertID(toupper(bind), IDsMap=ce.IDsMap, ByName=c("from", "to"))
 ##build the network by binding list and interaction map
 data("ce.interactionmap")
 sifNetwork<-buildNetwork(TFbindingTable=example.data$ce.bind, 
-							interactionmap=ce.interactionmap, level=2)
+                        interactionmap=ce.interactionmap, level=2)
 ##filter the network by expression data
 ##For each gene id, it should have only single record for expression change.
 unique.ce.microarrayData<-uniqueExprsData(example.data$ce.exprData,
-                        "Max", condenseName='logFC')
+                        method="Max", condenseName='logFC')
 data("ce.miRNA.map")
 cifNetwork<-filterNetwork(rootgene="WBGene00000912", sifNetwork=sifNetwork, 
-					exprsData=unique.ce.microarrayData, mergeBy="symbols",
+                    exprsData=unique.ce.microarrayData, mergeBy="symbols",
                     miRNAlist=as.character(ce.miRNA.map[ , 1]), 
                     tolerance=1, cutoffPVal=0.01, cutoffLFC=1)
 ##convert the unique gene ids back to gene symbols
@@ -158,7 +157,9 @@ plotNetwork<-function(gR, layouttype="dot", ...){
 plotNetwork(gR)
 ##output the GXL file
 library("XML")
-cat(saveXML(toGXL(gR)$value()))
+xml<-saveXML(toGXL(gR)$value())
+z<-textConnection(xml)
+cat(readLines(z, 8), sep="\n")
 ##calculate shortest path, ...
 library(RBGL)
 sp.between(gR,"daf-16","lam-2")
@@ -168,7 +169,7 @@ sp.between(gR,"daf-16","lam-2")
 \begin{figure}[htb]
 \centering
 \includegraphics{ce_example}
-\caption{Regulatory network of a fully working example}
+\caption{Regulatory network of a \textit{C. elegans} example}
 \label{fig:example_results}
 \end{figure}
 
@@ -192,9 +193,9 @@ network for \textit{H. sapiens}. The data was downloaded from \href{http://www.n
 > ##example.data$ce$exprData is the combination of gene/miRNA expression profile
 > ##note, here should set the miRNAtol to TRUE
 > cifNetwork<-filterNetwork(rootgene=rootgene, sifNetwork=sifNetwork, 
-+					exprsData=example.data$hs.exprData, mergeBy="symbols", 
-+					miRNAlist=as.character(hs.miRNA.map[,1]),
-+					tolerance=0, miRNAtol=TRUE)
++                    exprsData=example.data$hs.exprData, mergeBy="symbols", 
++                    miRNAlist=as.character(hs.miRNA.map[,1]),
++                    tolerance=0, miRNAtol=TRUE)
 > cifNetwork<-convertID(cifNetwork, hs.mapIDs, ByName=c("from","to"))
 > gR<-polishNetwork(cifNetwork)
 > ##plot the figure

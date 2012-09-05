@@ -1,4 +1,4 @@
-uniqueExprsData<-function(exprsData, method, condenseName='logFC'){
+uniqueExprsData<-function(exprsData, method='Max', condenseName='logFC'){
     if(!(method %in% c("Max", "Median", "Min"))){
         stop("method must be Max, Median or Min")
     }

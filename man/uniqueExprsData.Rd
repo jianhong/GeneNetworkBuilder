@@ -5,7 +5,7 @@
 get unique the microarray data for each gene id.
 }
 \usage{
-uniqueExprsData(exprsData, method, condenseName='logFC')
+uniqueExprsData(exprsData, method='Max', condenseName='logFC')
 }
 \arguments{
 \item{exprsData}{dataset of expression comparison data}
@@ -18,6 +18,6 @@ uniqueExprsData(exprsData, method, condenseName='logFC')
 \examples{
 data("example.data")
 example.microarrayData<-uniqueExprsData(example.data$example.microarrayData,
-						"Max", condenseName='logFC')
+						method="Max", condenseName='logFC')
 }
 \keyword{network}
