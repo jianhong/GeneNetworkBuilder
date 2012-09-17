@@ -156,13 +156,13 @@ plotNetwork<-function(gR, layouttype="dot", ...){
 }
 plotNetwork(gR)
 ##output the GXL file
-library("XML")
-xml<-saveXML(toGXL(gR)$value())
-z<-textConnection(xml)
-cat(readLines(z, 8), sep="\n")
+#library("XML")
+#xml<-saveXML(toGXL(gR)$value())
+#z<-textConnection(xml)
+#cat(readLines(z, 8), sep="\n")
 ##calculate shortest path, ...
-library(RBGL)
-sp.between(gR,"daf-16","lam-2")
+#library(RBGL)
+#sp.between(gR,"daf-16","lam-2")
 @
 \end{scriptsize}
 
