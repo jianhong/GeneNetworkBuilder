@@ -65,7 +65,7 @@ other embedded regulatory network is designed for \textit{Homo sapiens} combinin
 miRGen\cite{Panagiotis2010} and microCosm Targets\cite{Sam2008}. FANTOM stores physical
 interactions among the majority of human/mouse DNA-binding TFs. The miRGen
 is an integrated database of miRNA regulation by TFs and miRNA targets mainly for human. 
-Figure\ref{fig:workflow} depicts the relationships of various databases and
+Figure \ref{fig:workflow} depicts the relationships of various databases and
 its role in GNB.
 
 \begin{figure}[htb]
@@ -86,7 +86,7 @@ starting from the bound gene list.
 \end{enumerate}
 
 \begin{scriptsize}
-<<>>=
+<<QuickStart>>=
 ##
 library(GeneNetworkBuilder)
 ##load C. elegans miRNA ID lists
@@ -115,7 +115,7 @@ Here is an example to use GNB to generate a simple regulatory network for
 for further analysis.
 
 \begin{scriptsize}
-<<>>=
+<<ce_example,include=FALSE>>=
 library(GeneNetworkBuilder)
 data("example.data")
 ##Initialize a binding matrix by TF and the related gene lists of TFBDs.
@@ -152,23 +152,27 @@ plotNetwork<-function(gR, layouttype="dot", ...){
         stop("layouttype must be dot, neato, twopi, circo or fdp")
     }
     g1<-Rgraphviz::layoutGraph(gR, layoutType=layouttype, ...)
+    nodeRenderInfo(g1)$col <- nodeRenderInfo(gR)$col
+    nodeRenderInfo(g1)$fill <- nodeRenderInfo(gR)$fill
     renderGraph(g1)
 }
 plotNetwork(gR)
 ##output the GXL file
-#library("XML")
-#xml<-saveXML(toGXL(gR)$value())
-#z<-textConnection(xml)
-#cat(readLines(z, 8), sep="\n")
+library("XML")
+xml<-saveXML(toGXL(gR)$value())
+z<-textConnection(xml)
+cat(readLines(z, 8), sep="\n")
 ##calculate shortest path, ...
-#library(RBGL)
-#sp.between(gR,"daf-16","lam-2")
+library(RBGL)
+sp.between(gR,"daf-16","lam-2")
 @
 \end{scriptsize}
 
 \begin{figure}[htb]
 \centering
-\includegraphics{ce_example}
+<<fig2,fig=TRUE,echo=FALSE>>=
+plotNetwork(gR)
+@
 \caption{Regulatory network of a \textit{C. elegans} example}
 \label{fig:example_results}
 \end{figure}
@@ -200,10 +204,30 @@ network for \textit{H. sapiens}. The data was downloaded from \href{http://www.n
 > gR<-polishNetwork(cifNetwork)
 > ##plot the figure
 > library(RCytoscape)
+> gR <- initNodeAttribute(gR, "size", "numeric", 36)
+> gR <- initNodeAttribute(gR, "fill", "char", "transparent")
+> gR <- initNodeAttribute(gR, "borderColor", "char", "black")
+> gR <- initEdgeAttribute(gR, "weight", "numeric", 1)
 > cw <- new.CytoscapeWindow ('sox2', graph=gR)
 > showGraphicsDetails (cw, TRUE)
 > displayGraph(cw)
 > layoutNetwork (cw, layout.name='force-directed')
+> showGraphicsDetails(cw, T)
+>  rgb2hex <- function(x){
++ 		x<-col2rgb(x)
++ 		unlist(apply(x, 2, function(.ele) 
++ 						rgb(.ele[1], .ele[2], .ele[3], maxColorValue=255)))
++ }
+> col <- rgb2hex(nodeRenderInfo(gR)$col)
+> col <- col[!is.na(col)]
+> fill <- rgb2hex(nodeRenderInfo(gR)$fill)
+> fill <- fill[!is.na(fill)]
+> for(i in 1:length(fill)){setNodeColorDirect(cw, names(fill)[i], fill[i])}
+> for(i in 1:length(col)){setNodeBorderColorDirect(cw, names(col)[i], col[i])}
+> data <- nodeData(gR)
+> for(i in 1:length(data)){
++ 	setNodeSizeDirect(cw, names(data)[i], data[[i]]$size)
++ }
 > redraw (cw)
 \end{Sinput}
 \end{Schunk}
