@@ -1,6 +1,6 @@
 Package: GeneNetworkBuilder
 Type: Package
-Version: 1.4.0
+Version: 1.5.0
 Date: 2012-12-11
 Title: Build Regulatory Network from ChIP-chip/ChIP-seq and Expression Data
 Authors@R: c(person("Jianhong Ou", "Developer", role = c("aut", "cre"),
