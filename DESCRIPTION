@@ -1,8 +1,9 @@
 Package: GeneNetworkBuilder
 Type: Package
-Version: 1.5.1
+Version: 1.5.2
 Date: 2012-12-11
-Title: Build Regulatory Network from ChIP-chip/ChIP-seq and Expression Data
+Title: Build Regulatory Network from ChIP-chip/ChIP-seq and Expression
+        Data
 Authors@R: c(person("Jianhong Ou", "Developer", role = c("aut", "cre"),
         email = "jianhong.ou@umassmed.edu"), person("Lihua Julie Zhu",
         "Developer", role = "aut", email = "Julie.Zhu@umassmed.edu"))
@@ -12,11 +13,12 @@ Imports: plyr, graph
 Depends: R (>= 2.15.1), Rcpp (>= 0.9.13), graph
 Suggests: RUnit, BiocGenerics, Rgraphviz, XML, RCytoscape
 LinkingTo: Rcpp
-biocViews: HighThroughputSequencing, Microarray, GraphsAndNetworks
-Description: Appliation for discovering direct or indirect targets of transcription factors 
-		using ChIP-chip or ChIP-seq, and microarray or RNA-seq gene expression data. 
-		Inputting a list of genes of potential targets of one TF from ChIP-chip or ChIP-seq, 
-		and the gene expression results, GeneNetworkBuilder generates a regulatory
-		network of the TF.
+Description: Appliation for discovering direct or indirect targets of
+        transcription factors using ChIP-chip or ChIP-seq, and
+        microarray or RNA-seq gene expression data. Inputting a list of
+        genes of potential targets of one TF from ChIP-chip or
+        ChIP-seq, and the gene expression results, GeneNetworkBuilder
+        generates a regulatory network of the TF.
 License: GPL (>= 2)
 Lazyload: yes
+biocViews: Sequencing, Microarray, GraphAndNetwork
