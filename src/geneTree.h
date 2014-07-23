@@ -24,7 +24,7 @@ class node;
 class GTree;
 //struct for GTree;
 struct cmp_ch{
-	bool operator()(const char* a, const char* b);
+	bool operator()(const char* a, const char* b) const;
 };
 //enum regulation type;
 enum rtype {

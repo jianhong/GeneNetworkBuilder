@@ -27,7 +27,7 @@ node::~node(){
 	chd = NULL;
 }
 
-bool cmp_ch::operator()(const char* a, const char* b){
+bool cmp_ch::operator()(const char* a, const char* b) const{
 	return std::strcmp(a,b) < 0 ;
 }
 
