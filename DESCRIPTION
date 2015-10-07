@@ -1,7 +1,7 @@
 Package: GeneNetworkBuilder
 Type: Package
-Version: 1.11.0
-Date: 2014-07-22
+Version: 1.11.1
+Date: 2015-10-02
 Title: Build Regulatory Network from ChIP-chip/ChIP-seq and Expression
         Data
 Authors@R: c(person("Jianhong Ou", "Developer", role = c("aut", "cre"),
@@ -11,7 +11,7 @@ Author: Jianhong Ou , Haibo Liu, Heidi A Tissenbaum and Lihua Julie Zhu
 Maintainer: Jianhong Ou <jianhong.ou@umassmed.edu>
 Imports: plyr, graph
 Depends: R (>= 2.15.1), Rcpp (>= 0.9.13), graph
-Suggests: RUnit, BiocGenerics, Rgraphviz, XML, RCytoscape, RBGL
+Suggests: RUnit, BiocGenerics, Rgraphviz, XML, RCytoscape, RBGL, knitr
 LinkingTo: Rcpp
 Description: Appliation for discovering direct or indirect targets of
         transcription factors using ChIP-chip or ChIP-seq, and
@@ -22,3 +22,4 @@ Description: Appliation for discovering direct or indirect targets of
 License: GPL (>= 2)
 Lazyload: yes
 biocViews: Sequencing, Microarray, GraphAndNetwork
+VignetteBuilder: knitr
