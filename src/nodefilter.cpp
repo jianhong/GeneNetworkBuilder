@@ -73,7 +73,7 @@ RcppExport SEXP filterNodes(SEXP xx_from, SEXP xx_to, SEXP xx_miRNA, SEXP xx_log
 			if ((*nit)->miRNA && !miRNAcntTol) this_step_tolerance = 0; 
 			this_step_tolerance = (*nit)->tol - this_step_tolerance;
 			vector<const char*> parents;
-			for (int i=0; i<(*(*nit)->par).size(); i++) {
+			for (unsigned int i=0; i<(*(*nit)->par).size(); i++) {
 				if (mini) {
 					if ((*(*nit)->par)[i]->tol == this_step_tolerance)
 						parents.push_back((*(*nit)->par)[i]->name);
@@ -83,7 +83,7 @@ RcppExport SEXP filterNodes(SEXP xx_from, SEXP xx_to, SEXP xx_miRNA, SEXP xx_log
 			}
 			if (parents.size()>0) {
 				CharacterVector Rfrom(parents.size());
-				for (int i=0; i<parents.size(); i++) {
+				for (unsigned int i=0; i<parents.size(); i++) {
 					Rfrom[i] = parents[i];
 				}
 				bool status = false;
@@ -91,7 +91,7 @@ RcppExport SEXP filterNodes(SEXP xx_from, SEXP xx_to, SEXP xx_miRNA, SEXP xx_log
 					if (fabs((*nit)->logFC)<lfc || (*nit)->pval>pv) {
 						if ((*nit)->chd) {
 							//check whether there is any child come from this node
-							for (int i=0; i<(*(*nit)->chd).size(); i++) {
+							for (unsigned int i=0; i<(*(*nit)->chd).size(); i++) {
 								int next_step_tolerance = (fabs((*(*nit)->chd)[i]->logFC)>=lfc && (*(*nit)->chd)[i]->pval<=pv) ? 0 : 1;
 								if ((*(*nit)->chd)[i]->miRNA && !miRNAcntTol) next_step_tolerance = 0;
 								if ((*(*nit)->chd)[i]->tol == (*nit)->tol + next_step_tolerance) {

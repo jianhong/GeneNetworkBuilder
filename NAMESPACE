@@ -1,4 +1,5 @@
 importFrom(plyr, ., ddply)
+import(Rcpp)
 import(graph)
 useDynLib(GeneNetworkBuilder)
 export(convertID,buildNetwork,filterNetwork,polishNetwork,uniqueExprsData)

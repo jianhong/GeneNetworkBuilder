@@ -109,7 +109,7 @@ node* GTree::Search(const char* s){
 //change tolerance for children
 void GTree::ChangeTolerance(node *n){
 	if (n->chd) {
-		for (int i=0; i<n->chd->size(); i++) {
+		for (unsigned int i=0; i<n->chd->size(); i++) {
 			int tolerance = checkFC((*n->chd)[i]) ? 0 : 1;
 			if ((*n->chd)[i]->miRNA && !miRNAcnt4Tol) tolerance = 0;
 			tolerance = n->tol + tolerance;
@@ -204,7 +204,7 @@ vector<node*> GTree::Travel(){
 			t.push_back(cur);
 		Q.pop_front();
 		if (cur->chd) {
-			for (int i=0; i<(*cur->chd).size(); i++) {
+			for (unsigned int i=0; i<(*cur->chd).size(); i++) {
 				if(!find((*cur->chd)[i]->name,t)) {
 					Q.push_back((*cur->chd)[i]);
 				}
@@ -272,7 +272,7 @@ void GTree::verifyFilter(int tolerance){
 		}
 		if (!remove) {
 			if (cur->chd) {
-				for (int i=0; i<(*cur->chd).size(); i++) {
+				for (unsigned int i=0; i<(*cur->chd).size(); i++) {
 					if(!find((*cur->chd)[i]->name,t)) {
 						Q.push_back((*cur->chd)[i]);
 						t.push_back((*cur->chd)[i]);
