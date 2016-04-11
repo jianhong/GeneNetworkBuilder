@@ -90,6 +90,7 @@ GTree::GTree(bool m, double l, double p, int s, node *R):root(R){
 	miRNAcnt4Tol=m;
 	lfc=l;
 	pval=p;
+	nodelist.clear();
 }
 GTree::~GTree(){
 	if (root) {
@@ -184,8 +185,8 @@ void GTree::Remove(node *n){
 	}
 	if(nodelist.find(n->name)!=nodelist.end()) nodelist.erase(nodelist.find(n->name));
 	n->~node();
-	delete n;
-	n=NULL;
+	//delete n;
+	//n=NULL;
 	size--;
 }
 //unbuildPath
