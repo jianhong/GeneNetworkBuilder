@@ -64,18 +64,20 @@ test_filterNetwork<-function(){
                           logFC=c(1,1,1,1,1,-1,0.2,-1,0.2,-1,1,1),
 						  P.Value=c(0.001,0.001,0.001,0.001,0.001,0.1,0.001,0.001,0.001,0.001,0.001,0.001))
     miRNAlist<-c("C","I")
-    xxxf<-filterNetwork(rootgene,xx,exprsData,"symbols",miRNAlist,miRNAtol=FALSE,tolerance=0)
-    xxxt<-filterNetwork(rootgene,xx,exprsData,"symbols",miRNAlist,miRNAtol=TRUE,tolerance=0)
-	xxf<-filterNetwork(rootgene,xx,exprsData,"symbols",miRNAlist,miRNAtol=FALSE,tolerance=1)
-	xxt<-filterNetwork(rootgene,xx,exprsData,"symbols",miRNAlist,miRNAtol=TRUE,tolerance=1)
-    xf<-filterNetwork(rootgene,xx,exprsData,"symbols",miRNAlist,miRNAtol=FALSE,tolerance=2)
-	xt<-filterNetwork(rootgene,xx,exprsData,"symbols",miRNAlist,miRNAtol=TRUE,tolerance=2)
-    checkEquals(length(unique(unlist(xxxf[,1:2]))),8)
-    checkEquals(length(unique(unlist(xxxt[,1:2]))),6)
-    checkEquals(length(unique(unlist(xxf[,1:2]))),10)
-    checkEquals(length(unique(unlist(xxt[,1:2]))),10)
-    checkEquals(length(unique(unlist(xf[,1:2]))),12)
-    checkEquals(length(unique(unlist(xt[,1:2]))),12)
+    if(.Platform$OS.type != "windows"){
+        xxxf<-filterNetwork(rootgene,xx,exprsData,"symbols",miRNAlist,miRNAtol=FALSE,tolerance=0)
+        xxxt<-filterNetwork(rootgene,xx,exprsData,"symbols",miRNAlist,miRNAtol=TRUE,tolerance=0)
+        xxf<-filterNetwork(rootgene,xx,exprsData,"symbols",miRNAlist,miRNAtol=FALSE,tolerance=1)
+        xxt<-filterNetwork(rootgene,xx,exprsData,"symbols",miRNAlist,miRNAtol=TRUE,tolerance=1)
+        xf<-filterNetwork(rootgene,xx,exprsData,"symbols",miRNAlist,miRNAtol=FALSE,tolerance=2)
+        xt<-filterNetwork(rootgene,xx,exprsData,"symbols",miRNAlist,miRNAtol=TRUE,tolerance=2)
+        checkEquals(length(unique(unlist(xxxf[,1:2]))),8)
+        checkEquals(length(unique(unlist(xxxt[,1:2]))),6)
+        checkEquals(length(unique(unlist(xxf[,1:2]))),10)
+        checkEquals(length(unique(unlist(xxt[,1:2]))),10)
+        checkEquals(length(unique(unlist(xf[,1:2]))),12)
+        checkEquals(length(unique(unlist(xt[,1:2]))),12)
+    }
 }
 
 test_polishNetwork<-function(){

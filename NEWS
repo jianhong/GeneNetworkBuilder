@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.13.2
+-----------------------
+    o debug for crash in windows
+    
 CHANGES IN VERSION 1.13.1
 -----------------------
     o change int i to unsigned int i to fix the warning

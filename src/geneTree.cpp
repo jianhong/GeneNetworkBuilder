@@ -21,10 +21,14 @@ node::node(const char *t, double l, bool r, double p){
 	chd = new vector<node*>;
 }
 node::~node(){
-	delete par;
-	par = NULL;
-	delete chd;
-	chd = NULL;
+    if(par){
+        delete par;
+        par = NULL;
+    }
+	if(chd){
+	    delete chd;
+	    chd = NULL;
+	}
 }
 
 bool cmp_ch::operator()(const char* a, const char* b) const{
@@ -185,8 +189,6 @@ void GTree::Remove(node *n){
 	}
 	if(nodelist.find(n->name)!=nodelist.end()) nodelist.erase(nodelist.find(n->name));
 	n->~node();
-	//delete n;
-	//n=NULL;
 	size--;
 }
 //unbuildPath
@@ -229,59 +231,63 @@ void GTree::verifyFilter(int tolerance){
 	while (!Q.empty()) {
 		cur = Q.front();
 		Q.pop_front();
-		//check and remove
-		//is the node without any child?
-		bool isLeaf = false;
-		bool remove = false;
-		if (cur->chd) {
-			if (cur->chd->size()==0) {
-				isLeaf=true;
-			} else {
-				if (cur->chd->size()==1) {
-					//is the node has only one child and the child point to itself?
-					if(std::strcmp((*cur->chd)[0]->name,cur->name)==0) isLeaf = true;
-					else {//is this node is the extra node for other path?
-						int next_step_tolerance = checkFC((*cur->chd)[0]) ? 0 : 1;
-						if((*cur->chd)[0]->miRNA && !miRNAcnt4Tol) next_step_tolerance = 0;
-						if(cur->tol == tolerance && next_step_tolerance) isLeaf = true;
-					}					
-				}
-			}
-		} else {
-			isLeaf = true;
-		}
-		vector<node*>::iterator vit=std::find(t.begin(), t.end(), cur);
-		if(isLeaf) {
-			// remove the node if the logFC==0
-			if (!checkFC(cur)) {
-				if (std::strcmp(cur->name,root->name)!=0) {
-					if (vit!=t.end()) t.erase(vit);
-					Remove(cur);
-					remove = true;
-				}
-				
-			}
-		} else {
-			// remove the node with tolerance > threhold
-			if (cur->tol > tolerance) {
-				if (std::strcmp(cur->name,root->name)!=0) {
-					if (vit!=t.end()) t.erase(vit);
-					Remove(cur);
-					remove = true;
-				}
-			}
-		}
-		if (!remove) {
-			if (cur->chd) {
-				for (unsigned int i=0; i<(*cur->chd).size(); i++) {
-					if(!find((*cur->chd)[i]->name,t)) {
-						Q.push_back((*cur->chd)[i]);
-						t.push_back((*cur->chd)[i]);
-					}
-				}
-			}
-		} else {
-			changed=true;
+		if(cur){
+		    //check and remove
+		    //is the node without any child?
+		    bool isLeaf = false;
+		    bool remove = false;
+		    if (cur->chd) {
+		        if (cur->chd->size()==0) {
+		            isLeaf=true;
+		        } else {
+		            if (cur->chd->size()==1) {
+		                //is the node has only one child and the child point to itself?
+		                if(std::strcmp((*cur->chd)[0]->name,cur->name)==0) isLeaf = true;
+		                else {//is this node is the extra node for other path?
+		                    int next_step_tolerance = checkFC((*cur->chd)[0]) ? 0 : 1;
+		                    if((*cur->chd)[0]->miRNA && !miRNAcnt4Tol) next_step_tolerance = 0;
+		                    if(cur->tol == tolerance && next_step_tolerance) isLeaf = true;
+		                }					
+		            }
+		        }
+		    } else {
+		        isLeaf = true;
+		    }
+		    vector<node*>::iterator vit=std::find(t.begin(), t.end(), cur);
+		    if(isLeaf) {
+		        // remove the node if the logFC==0
+		        if (!checkFC(cur)) {
+		            if (std::strcmp(cur->name,root->name)!=0) {
+		                if (vit!=t.end()) t.erase(vit);
+		                Remove(cur);
+		                remove = true;
+		            }
+		            
+		        }
+		    } else {
+		        // remove the node with tolerance > threhold
+		        if (cur->tol > tolerance) {
+		            if (std::strcmp(cur->name,root->name)!=0) {
+		                if (vit!=t.end()) t.erase(vit);
+		                Remove(cur);
+		                remove = true;
+		            }
+		        }
+		    }
+		    if (!remove) {
+		        if (cur->chd) {
+		            for (unsigned int i=0; i<(*cur->chd).size(); i++) {
+		                if(!find((*cur->chd)[i]->name,t)) {
+		                    if((*cur->chd)[i]){
+		                        Q.push_back((*cur->chd)[i]);
+		                        t.push_back((*cur->chd)[i]);
+		                    }
+		                }
+		            }
+		        }
+		    } else {
+		        changed=true;
+		    }
 		}
 	}
 	if (changed) {
