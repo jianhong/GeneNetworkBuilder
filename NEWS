@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.13.3
+-----------------------
+    o remove destructor
+
+
 CHANGES IN VERSION 1.13.2
 -----------------------
     o debug for crash in windows

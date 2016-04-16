@@ -20,16 +20,6 @@ node::node(const char *t, double l, bool r, double p){
 	par = new vector<node*>;
 	chd = new vector<node*>;
 }
-node::~node(){
-    if(par){
-        delete par;
-        par = NULL;
-    }
-	if(chd){
-	    delete chd;
-	    chd = NULL;
-	}
-}
 
 bool cmp_ch::operator()(const char* a, const char* b) const{
 	return std::strcmp(a,b) < 0 ;
@@ -44,16 +34,6 @@ bool GTree::find(const char* s,vector<node*> vec){
 		}
 	}
 	return false;
-}
-//delete all
-void GTree::delall(){
-	map<const char *, node*, cmp_ch>::iterator it;
-	for (it=nodelist.begin();it!=nodelist.end();it++) {
-		it->second->~node();
-	}
-	nodelist.erase(nodelist.begin(),nodelist.end());
-	delete root;
-	root = NULL;
 }
 //check foldchange and p value
 bool GTree::checkFC(node* n){
@@ -95,11 +75,6 @@ GTree::GTree(bool m, double l, double p, int s, node *R):root(R){
 	lfc=l;
 	pval=p;
 	nodelist.clear();
-}
-GTree::~GTree(){
-	if (root) {
-		delall();
-	}
 }
 //search by from
 node* GTree::Search(const char* s){
@@ -188,7 +163,6 @@ void GTree::Remove(node *n){
 		}
 	}
 	if(nodelist.find(n->name)!=nodelist.end()) nodelist.erase(nodelist.find(n->name));
-	n->~node();
 	size--;
 }
 //unbuildPath

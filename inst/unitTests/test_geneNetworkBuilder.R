@@ -102,8 +102,11 @@ test_polishNetwork<-function(){
                           logFC=c(1,1,1,1,1,-1,0.2,-1,0.2,-1),
 						  P.Value=c(0.001,0.001,0.001,0.001,0.001,0.1,0.001,0.001,0.001,0.001))
     miRNAlist<-c("C","I")
-    xxxf<-filterNetwork(rootgene,xx,exprsData,"symbols",miRNAlist,miRNAtol=FALSE)
-    gR<-polishNetwork(xxxf)
-    l<-RBGL::sp.between(gR,"A","E")
-    checkEquals(l[[1]]$length,3)
+    
+    if(.Platform$OS.type != "windows"){
+        xxxf<-filterNetwork(rootgene,xx,exprsData,"symbols",miRNAlist,miRNAtol=FALSE)
+        gR<-polishNetwork(xxxf)
+        l<-RBGL::sp.between(gR,"A","E")
+        checkEquals(l[[1]]$length,3)
+    }
 }

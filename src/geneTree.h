@@ -44,7 +44,6 @@ public:
 	vector<node*> *chd;
 public:
 	node(const char *t, double l=0.0, bool r=false, double p=0.0);
-	~node();
 };
 
 //tree
@@ -58,8 +57,6 @@ public:
 	double pval;
 private:
 	bool find(const char* s,vector<node*> vec);
-	//delete all
-	void delall();
 	//check foldchange and p value
 	bool checkFC(node* n);
 	//check direction
@@ -67,7 +64,6 @@ private:
 
 public:
 	GTree(bool m=false, double l=0.0, double p=0.0, int s=0, node *R=NULL);
-	~GTree();
 	//search by from
 	node* Search(const char* s);
 	//change tolerance for children
