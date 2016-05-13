@@ -61,8 +61,10 @@ filterNetwork<-function(rootgene, sifNetwork, exprsData, mergeBy="symbols", miRN
                     tolerance=0, cutoffPVal=0.01, cutoffLFC=0.5, minify=TRUE, miRNAtol=FALSE)
 {
     GeneNetworkBuilder:::checkMCName(sifNetwork)
-    if(!is.vector(miRNAlist)){
-        stop("miRNAlist should be a vector")
+    if(!missing(miRNAlist)){
+        if(!is.vector(miRNAlist)){
+            stop("miRNAlist should be a vector")
+        }
     }
     if(!GeneNetworkBuilder:::checkCName(mergeBy, exprsData)){
         stop(paste(mergeBy, "is not a column name of exprsData"))
@@ -104,9 +106,11 @@ filterNetwork<-function(rootgene, sifNetwork, exprsData, mergeBy="symbols", miRN
 ##   label microRNA
     cifNetwork$miRNA<-FALSE
     cifNetwork$dir<-2
-    if(length(miRNAlist)>0){
-        cifNetwork$miRNA<-ifelse(cifNetwork$to %in% miRNAlist, TRUE, FALSE)
-        cifNetwork$dir<-ifelse(cifNetwork$from %in% miRNAlist, 0, 2)
+    if(!missing(miRNAlist)){
+        if(length(miRNAlist)>0){
+            cifNetwork$miRNA<-ifelse(cifNetwork$to %in% miRNAlist, TRUE, FALSE)
+            cifNetwork$dir<-ifelse(cifNetwork$from %in% miRNAlist, 0, 2)
+        }
     }
 ##   remove micorRNA
     if(remove_miRNA){

@@ -77,6 +77,8 @@ test_filterNetwork<-function(){
         checkEquals(length(unique(unlist(xxt[,1:2]))),10)
         checkEquals(length(unique(unlist(xf[,1:2]))),12)
         checkEquals(length(unique(unlist(xt[,1:2]))),12)
+        ## check miRNAlist could be missing
+        null <- filterNetwork(rootgene,xx,exprsData,"symbols",tolerance=1)
     }
 }
 
