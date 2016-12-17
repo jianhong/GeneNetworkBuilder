@@ -1,0 +1,171 @@
+#' browse network
+#'
+#' browse network of graphNEL
+#'
+#' @import htmlwidgets
+#' @import Rgraphviz
+#'
+#' @param gR an object of \link[graph]{graphNEL}
+#' @param layoutType layout type
+#' @param width width of the figure
+#' @param height height of the figure
+#' @param ... parameters used by \link[Rgraphviz]{layoutGraph}
+#'
+#' @export
+browseNetwork <- function(gR = graphNEL(),
+                          layoutType = c("fdp", "dot", "neato",
+                                         "twopi", "circo"),
+                          width=NULL, height=NULL, ...){
+  stopifnot(is(gR,"graphNEL"))
+  layoutType <- match.arg(layoutType)
+  stopifnot(length(nodes(gR))>0)
+  g1 <- Rgraphviz::layoutGraph(gR, layoutType=layoutType, ...)
+  df1 <- do.call(cbind, nodeRenderInfo(g1))
+  df <- do.call(rbind, lapply(nodeData(gR),
+                              as.data.frame,
+                              stringsAsFactors=FALSE))
+  df$nodeX <- as.numeric(as.character(df1[rownames(df), "nodeX"]))
+  df$nodeY <- as.numeric(as.character(df1[rownames(df), "nodeY"]))
+  df$id <- rownames(df)
+  size.range <- range(df$size, na.rm=TRUE)
+  df$fontSize <- 36*(df$size - size.range[1])/diff(size.range) + 12
+  
+  nodesDf2json <- function(df){
+    nodes <- lapply(rownames(df), function(i){
+      .ele <- df[i, ]
+      list(data = as.list(.ele),
+           position = list(x=.ele$nodeX,
+                           y=.ele$nodeY),
+           group = "nodes")
+    })
+    #names(nodes) <- rownames(df)
+    nodes
+  }
+  edges2json <- function(edges){
+    edges <- edges[sapply(edges, length)>0]
+    edges.df <- mapply(function(target, source, id){
+      weight <- 1
+      if(class(target)=="list"){
+        weight <- target$weights
+        target <- target$edges
+      }
+      data.frame(id=paste0(id, '_', seq_len(length(target))),
+                 source=source,
+                 target=target,
+                 weight=weight)
+    }, edges, names(edges), paste0("edge", seq_len(length(edges))),
+    SIMPLIFY = FALSE)
+    edges.df <- do.call(rbind, edges.df)
+    edges <- lapply(1:nrow(edges.df), function(i){
+      list(data=list(id=as.character(edges.df$id[i]),
+                     source=as.character(edges.df$source)[i],
+                     target=as.character(edges.df$target)[i],
+                     weight=as.numeric(as.character(edges.df$weight))[i]))
+    })
+    return(edges)
+  }
+  graph2json <- function(df, edges){
+    nodes <- nodesDf2json(df)
+    edges <- edges2json(edges)
+    list(nodes=nodes, edges=edges)
+  }
+  elements <- graph2json(df, edges(gR))
+  
+  style <- list(list("selector"="core",
+                     "style"=list("selection-box-color"="#AAD8FF",
+                                  "selection-box-border-color"="#8BB0D0",
+                                  "selection-box-opacity"="0.5")),
+                list("selector"="node",
+                     "style"=list("width"="data(size)",
+                                  "height"="data(size)",
+                                  "content"="data(label)",
+                                  "font-size"="data(fontSize)",
+                                  "text-valign"="center",
+                                  "text-halign"="center",
+                                  "background-color"="data(fill)",
+                                  "border-color"="data(borderColor)",
+                                  "border-style"="solid",
+                                  "border-width"="2px",
+                                  "text-outline-color"="#eee",
+                                  "text-outline-width"="1px",
+                                  "color"="#000",
+                                  "overlay-padding"="6px",
+                                  "z-index"="10")),
+                list("selector"="node:selected",
+                     "style"=list("border-width"="6px",
+                                  "border-color"="yellow")),
+                list("selector"='$node > node',
+                     "style"=list('padding-top'='10px',
+                                  'padding-left'='10px',
+                                  'padding-bottom'='10px',
+                                  'padding-right'='10px',
+                                  'text-valign'='top',
+                                  'text-halign'='center')),
+                list("selector"="edge",
+                     "style"=list("curve-style"="haystack",
+                                  "haystack-radius"="0.5",
+                                  "opacity"="0.4",
+                                  "line-color"="#bbb",
+                                  "width"="1px",
+                                  "overlay-padding"="3px")),
+                list("selector"="node.unhighlighted",
+                     "style"=list("opacity"="0.2")),
+                list("selector"="edge.unhighlighted",
+                     "style"=list("opacity"="0.05")),
+                list("selector"=".highlighted",
+                     "style"=list("z-index"="999999")),
+                list("selector"="node.highlighted",
+                     "style"=list("border-width"="6px",
+                                  "border-color"="#AAD8FF",
+                                  "border-opacity"="0.5",
+                                  "background-color"="#394855",
+                                  "shadow-blur"="12px",
+                                  "shadow-color"="#000",
+                                  "shadow-opacity"="0.8",
+                                  "shadow-offset-x"="0px",
+                                  "shadow-offset-y"="4px")),
+                list("selector"="edge.filtered",
+                     "style"=list("opacity"="0")))
+  
+  x <- list(
+    elements = elements,
+    style = style,
+    layout = list("name"="preset")
+  )
+  
+  htmlwidgets::createWidget(
+    name = 'browseNetwork',
+    x = x,
+    width = width,
+    height = height,
+    package = getPackageName()
+  )
+}
+
+#' Shiny bindings for browseNetwork
+#'
+#' Output and render functions for using browseNetwork within Shiny
+#' applications and interactive Rmd documents.
+#'
+#' @param outputId output variable to read from
+#' @param width,height Must be a valid CSS unit (like \code{'100\%'},
+#'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
+#'   string and have \code{'px'} appended.
+#' @param expr An expression that generates a browseNetwork
+#' @param env The environment in which to evaluate \code{expr}.
+#' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
+#'   is useful if you want to save an expression in a variable.
+#'
+#' @name browseNetwork-shiny
+#'
+#' @export
+browseNetworkOutput <- function(outputId, width = '100%', height = '400px'){
+  htmlwidgets::shinyWidgetOutput(outputId, 'browseNetwork', width, height, package = 'browseNetwork')
+}
+
+#' @rdname browseNetwork-shiny
+#' @export
+renderBrowseNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
+  if (!quoted) { expr <- substitute(expr) } # force quoted
+  htmlwidgets::shinyRenderWidget(expr, browseNetworkOutput, env, quoted = TRUE)
+}

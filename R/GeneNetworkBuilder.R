@@ -192,6 +192,15 @@ polishNetwork<-function(cifNetwork,
                 },edL,useLogFCAsWeight)
     names(edL)<-node
     gR<-new("graphNEL", nodes=node, edgeL=edL, edgemode="directed")
+    ## set node default data
+    nodeDataDefaults(gR, attr="label") <- NA
+    nodeDataDefaults(gR, attr="logFC") <- 0
+    nodeDataDefaults(gR, attr="miRNA") <- FALSE
+    for(i in node) {
+      nodeData(gR, n=i, attr="label") <- i
+      nodeData(gR, n=i, attr="logFC") <- cifNetwork[match(i, cifNetwork$to), "logFC"]
+      nodeData(gR, n=i, attr="miRNA") <- cifNetwork[match(i, cifNetwork$to), "miRNA"]
+    }
 ## set node size
     nodeDataDefaults(gR, attr="size")<-nodesDefaultSize
     for(i in unique(as.character(cifNetwork$from))){

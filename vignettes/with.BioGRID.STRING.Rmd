@@ -1,0 +1,84 @@
+---
+title: "Working with BioGRID, STRING"
+vignette: >
+  %\VignetteIndexEntry{GeneNetworkBuilder Vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+output:
+  html_document:
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+library(GeneNetworkBuilder)
+library(simpIntLists)
+library(knitr)
+library(STRINGdb)
+```
+
+# Using data from BioGRID 
+```{r BioGRID}
+library(GeneNetworkBuilder)
+library(simpIntLists)
+i <- findInteractionList("human", "Official")
+i <- lapply(i, function(.ele) cbind(from=as.character(.ele$name), to=as.character(.ele$interactors)))
+i <- do.call(rbind, i)
+set.seed(123)
+## generate a random ChIP-seq binding table
+rootgene <- sample(i[, 1], 1)
+TFbindingTable <- i[i[, 1] == rootgene, ]
+interactionmap <- i
+# build network
+sifNetwork<-buildNetwork(TFbindingTable=TFbindingTable, 
+                        interactionmap=interactionmap, level=2)
+ID=unique(as.character(sifNetwork))
+## create a random expression data
+expressionData <- data.frame(ID=ID,
+                             logFC=sample(-3:3, length(ID), replace=TRUE),
+                             P.Value=runif(n=length(ID), max=0.25))
+## filter network
+cifNetwork<-filterNetwork(rootgene=rootgene, sifNetwork=sifNetwork, 
+                    exprsData=expressionData, mergeBy="ID",
+                    miRNAlist=character(0), 
+                    tolerance=1, cutoffPVal=0.01, cutoffLFC=1)
+## polish network
+gR<-polishNetwork(cifNetwork)
+## browse network
+browseNetwork(gR)
+```
+
+# Using data from STRING 
+
+```{r STRING}
+library(STRINGdb)
+string_db <- STRINGdb$new( version="10", species=9606,
+                           score_threshold=400)
+data(diff_exp_example1)
+example1_mapped <- string_db$map( diff_exp_example1, "gene", removeUnmappedRows = TRUE )
+i <- string_db$get_interactions(example1_mapped$STRING_id)
+rootgene <- sample(i[, 1], 1) # random set a rootgene. It should be set by your experiment.
+TFbindingTable <- i[i[, 1] == rootgene, c("from", "to")]
+interactionmap <- i[, c("from", "to")]
+sifNetwork<-buildNetwork(TFbindingTable=TFbindingTable, 
+                        interactionmap=interactionmap, level=2)
+## filter network
+colnames(example1_mapped) <- c("gene", "P.Value", "logFC", "symbols")
+## unique expression data by symbols column
+expressionData <- uniqueExprsData(example1_mapped, 
+                                   method = 'Max', 
+                                   condenseName = "logFC")
+## merge binding table with expression data by symbols column
+cifNetwork<-filterNetwork(rootgene=rootgene, 
+                          sifNetwork=sifNetwork, 
+                          exprsData=expressionData, mergeBy="symbols",
+                          miRNAlist=character(0), 
+                          tolerance=1, cutoffPVal=0.01, cutoffLFC=1)
+## convert the id back to symbol
+IDsMap <- expressionData$gene
+names(IDsMap) <- expressionData$symbols
+cifNetwork <- convertID(cifNetwork, IDsMap)
+## polish network
+gR<-polishNetwork(cifNetwork)
+## browse network
+browseNetwork(gR)
+```

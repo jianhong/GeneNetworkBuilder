@@ -38,8 +38,6 @@ value as weight. If FALSE, use constant 1 as weight.}
 					mergeBy="symbols",
 					miRNAlist=as.character(ce.miRNA.map[ , 1]), tolerance=1)
 	gR<-polishNetwork(cifNetwork)
-##	g1<-Rgraphviz::layoutGraph(gR)
-##	renderGraph(g1)
-##	cat(saveXML(toGXL(g1)),sep="\n")
+##	browseNetwork(gR)
 }
 \keyword{network}

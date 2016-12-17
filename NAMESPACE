@@ -1,5 +1,8 @@
 importFrom(plyr, ., ddply)
 import(Rcpp)
 import(graph)
+import(Rgraphviz)
+import(htmlwidgets)
 useDynLib(GeneNetworkBuilder)
-export(convertID,buildNetwork,filterNetwork,polishNetwork,uniqueExprsData)
+export(convertID,buildNetwork,filterNetwork,polishNetwork,uniqueExprsData,
+       browseNetwork,browseNetworkOutput,renderBrowseNetwork)
