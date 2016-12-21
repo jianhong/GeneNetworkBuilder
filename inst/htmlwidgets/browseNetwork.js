@@ -15,12 +15,13 @@ HTMLWidgets.widget({
         // TODO: code to render the widget, e.g.
         x.container = el;
         cy = cytoscape(x);
+        //qtip
         cy.nodes().forEach(function(n){
           //console.log(n._private);
           var data = n._private.data;
           var g = data.label;
           var tipStr = "";
-          console.log(data);
+          // console.log(data);
           for(var key in data) {
             tipStr += key + ": "+ data[key] + "<br/>";
           }
@@ -38,6 +39,10 @@ HTMLWidgets.widget({
             }
           });
         });
+        //panzoom
+        cy.panzoom();
+        //search box
+        cy.searchbox();
       },
 
       resize: function(width, height) {

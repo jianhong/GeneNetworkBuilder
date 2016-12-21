@@ -25,7 +25,6 @@ suppressPackageStartupMessages({
   library(GeneNetworkBuilder)
   library(Rgraphviz)
   library(XML)
-  library(RCyjs)
 })
 knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 ```
@@ -103,8 +102,14 @@ cifNetwork<-filterNetwork(rootgene="WBGene00000912", sifNetwork=sifNetwork,
                     miRNAlist=as.character(ce.miRNA.map[ , 1]), 
                     remove_miRNA=FALSE, tolerance=1)
 ##generate graphNEL object for the network
-gR<-polishNetwork(cifNetwork=cifNetwork, nodecolor=colorRampPalette(c("green", "yellow", "red"))(5))
-browseNetwork(gR)
+gR<-polishNetwork(cifNetwork=cifNetwork,
+                  nodecolor=colorRampPalette(c("green", 
+                                               "yellow", 
+                                               "red"))(5))
+##show network
+(html <- browseNetwork(gR))
+##save network
+exportNetwork(html, "network.html")
 ```
 
 # Example using gene expression profile
@@ -156,6 +161,10 @@ plotNetwork<-function(gR, layouttype="dot", ...){
     renderGraph(g1)
 }
 plotNetwork(gR)
+##output file for cytoscape
+exportNetwork(browseNetwork(gR), 
+              file="network.xgmml", 
+              format = "XGMML")
 ##output the GXL file
 library("XML")
 xml<-saveXML(toGXL(gR)$value())

@@ -8,16 +8,27 @@ dependencies:
     src: "htmlwidgets/lib/"
     head: '<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>'
   - name: qtip
-    version: 2.2.1
+    version: 2.2.0
     src: "htmlwidgets/lib"
     head:
       - '<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.css">'
       - '<script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>'
+  - name: cytoscape.js-panzoom
+    version: 2.4.0
+    src: "htmlwidgets/lib"
+    head:
+      - '<script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-panzoom/master/cytoscape-panzoom.js"></script>'
+      - '<link rel="stylesheet" href="https://cdn.rawgit.com/cytoscape/cytoscape.js-panzoom/master/cytoscape.js-panzoom.css">'
   - name: cytoscape-qtip
-    version: 2.1.0
+    version: 2.2.5
     src: "htmlwidgets/lib"
     head: '<script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-qtip/2.2.5/cytoscape-qtip.js"></script>'
   - name: font-awesome
-    version: 4.0.3
+    version: 4.3.0
     src: "htmlwidgets/lib"
     head: "<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>"
+  - name: cytoscape-searchbox
+    version: 0.0.1
+    src: "htmlwidgets/lib/searchbox"
+    script: 'cytoscape-searchbox.js'
+    stylesheet: 'cytoscape-searchbox.css'

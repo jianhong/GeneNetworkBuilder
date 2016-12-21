@@ -1,26 +1,41 @@
 Package: GeneNetworkBuilder
 Type: Package
-Version: 1.17.1
-Date: 2016-12-13
+Version: 1.17.2
+Date: 2016-12-20
 Title: Build Regulatory Network from ChIP-chip/ChIP-seq and Expression
-        Data
+    Data
 Authors@R: c(person("Jianhong Ou", "Developer", role = c("aut", "cre"),
         email = "jianhong.ou@umassmed.edu"), person("Lihua Julie Zhu",
         "Developer", role = "aut", email = "Julie.Zhu@umassmed.edu"))
 Author: Jianhong Ou , Haibo Liu, Heidi A Tissenbaum and Lihua Julie Zhu
 Maintainer: Jianhong Ou <jianhong.ou@umassmed.edu>
-Imports: plyr, graph, htmlwidgets, Rgraphviz
-Depends: R (>= 2.15.1), Rcpp (>= 0.9.13)
-Suggests: RUnit, BiocGenerics, XML, RCyjs, RBGL, knitr, 
-          simpIntLists, shiny
+Imports:
+    plyr,
+    graph,
+    htmlwidgets,
+    Rgraphviz,
+    rjson,
+    XML
+Depends:
+    R (>= 2.15.1),
+    Rcpp (>= 0.9.13)
+Suggests:
+    RUnit,
+    BiocGenerics,
+    RBGL,
+    knitr,
+    simpIntLists,
+    shiny,
+    STRINGdb
 LinkingTo: Rcpp
 Description: Appliation for discovering direct or indirect targets of
-        transcription factors using ChIP-chip or ChIP-seq, and
-        microarray or RNA-seq gene expression data. Inputting a list of
-        genes of potential targets of one TF from ChIP-chip or
-        ChIP-seq, and the gene expression results, GeneNetworkBuilder
-        generates a regulatory network of the TF.
+    transcription factors using ChIP-chip or ChIP-seq, and
+    microarray or RNA-seq gene expression data. Inputting a list of
+    genes of potential targets of one TF from ChIP-chip or
+    ChIP-seq, and the gene expression results, GeneNetworkBuilder
+    generates a regulatory network of the TF.
 License: GPL (>= 2)
 Lazyload: yes
 biocViews: Sequencing, Microarray, GraphAndNetwork
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1

@@ -1,3 +1,9 @@
+CHANGES IN VERSION 1.17.2
+-----------------------
+    o add function exportNetwork.
+    o add cytoscape-searchbox
+    o update documents.
+    
 CHANGES IN VERSION 1.17.1
 -----------------------
     o add function browseNetwork.
