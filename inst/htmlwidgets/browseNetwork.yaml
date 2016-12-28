@@ -1,32 +1,30 @@
 dependencies:
   - name: jquery
     version: 2.1.4
-    src: "htmlwidgets/lib"
-    head: '<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>'
+    src: "htmlwidgets/lib/jquery"
+    script: 'jquery.min.js'
   - name: cytoscape
     version: 2.7.13
-    src: "htmlwidgets/lib/"
-    head: '<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>'
+    src: "htmlwidgets/lib/cytoscape"
+    script: 'cytoscape.min.js'
   - name: qtip
     version: 2.2.0
-    src: "htmlwidgets/lib"
-    head:
-      - '<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.css">'
-      - '<script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>'
+    src: "htmlwidgets/lib/qtip2"
+    stylesheet: 'jquery.qtip.min.css'
+    script: 'jquery.qtip.min.js'
   - name: cytoscape.js-panzoom
     version: 2.4.0
-    src: "htmlwidgets/lib"
-    head:
-      - '<script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-panzoom/master/cytoscape-panzoom.js"></script>'
-      - '<link rel="stylesheet" href="https://cdn.rawgit.com/cytoscape/cytoscape.js-panzoom/master/cytoscape.js-panzoom.css">'
+    src: "htmlwidgets/lib/panzoom"
+    script: 'cytoscape-panzoom.js'
+    stylesheet: 'cytoscape.js-panzoom.css'
   - name: cytoscape-qtip
     version: 2.2.5
-    src: "htmlwidgets/lib"
-    head: '<script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-qtip/2.2.5/cytoscape-qtip.js"></script>'
+    src: "htmlwidgets/lib/qtip2"
+    script: 'cytoscape-qtip.js'
   - name: font-awesome
-    version: 4.3.0
-    src: "htmlwidgets/lib"
-    head: "<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>"
+    version: 4.7.0
+    src: "htmlwidgets/lib/fontawesome"
+    stylesheet: "css/font-awesome.min.css"
   - name: cytoscape-searchbox
     version: 0.0.1
     src: "htmlwidgets/lib/searchbox"

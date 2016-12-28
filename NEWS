@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.17.3
+-----------------------
+    o make the local copy of javascript library
+    
 CHANGES IN VERSION 1.17.2
 -----------------------
     o add function exportNetwork.

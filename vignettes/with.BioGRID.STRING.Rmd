@@ -1,7 +1,7 @@
 ---
 title: "Working with BioGRID, STRING"
 vignette: >
-  %\VignetteIndexEntry{GeneNetworkBuilder Vignette}
+  %\VignetteIndexEntry{Working with BioGRID, STRING}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 output:
