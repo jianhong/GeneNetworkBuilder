@@ -30,3 +30,8 @@ dependencies:
     src: "htmlwidgets/lib/searchbox"
     script: 'cytoscape-searchbox.js'
     stylesheet: 'cytoscape-searchbox.css'
+  - name: cytoscape-exportbox
+    version: 0.0.1
+    src: "htmlwidgets/lib/exportbox"
+    script: 'cytoscape-exportbox.js'
+    stylesheet: 'cytoscape-exportbox.css'

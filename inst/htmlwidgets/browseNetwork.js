@@ -23,7 +23,13 @@ HTMLWidgets.widget({
           var tipStr = "";
           // console.log(data);
           for(var key in data) {
-            tipStr += key + ": "+ data[key] + "<br/>";
+            if(key === 'label'){
+              tipStr += key + ': ' +
+                '<a href="http://useast.ensembl.org/Multi/Search/Results?q=' +
+                data[key] + '" target="_blank">' + data[key] + '</a><br/>';
+            }else{
+              tipStr += key + ": "+ data[key] + "<br/>";
+            }
           }
           n.qtip({
             content: {text: tipStr,
@@ -43,6 +49,8 @@ HTMLWidgets.widget({
         cy.panzoom();
         //search box
         cy.searchbox();
+        //export box
+        cy.exportbox();
       },
 
       resize: function(width, height) {

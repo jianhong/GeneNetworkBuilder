@@ -1,0 +1,49 @@
+.cy-exportbox{
+  position: absolute;
+  font-size: 11px;
+  font-family: arial, helvetica, sans-serif;
+  z-index: 999999;
+  width: 180px;
+  height: 30px;
+}
+
+.cy-exportbox-bottom-left{
+  bottom: 0;
+  left: 6px;
+}
+.cy-exportbox-bottom-right{
+  bottom: 0;
+  right: 6px;
+}
+.cy-exportbox-top-left{
+  top: 6px;
+  left: 6px;
+}
+.cy-exportbox-top-right{
+  top: 6px;
+  right: 6px;
+}
+
+.cy-exportbox-div{
+  float: left;
+  width: 100%;
+}
+.cy-exportbox-label{
+  margin: 0;
+  border: 0;
+  padding: 2px;
+}
+
+.cy-exportbox-button{
+  margin: 0;
+  padding: 2px;
+  cursor: pointer;
+}
+.cy-exportbox-button:before {
+    font-family: 'FontAwesome';
+    content: '\f083';
+    padding-right: 3px;
+    position: relative;
+    font-size: 90%;
+}
+

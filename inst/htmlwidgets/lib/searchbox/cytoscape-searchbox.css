@@ -3,16 +3,19 @@
   font-size: 11px;
   font-family: arial, helvetica, sans-serif;
   z-index: 999999;
-  width: 100px;
+  width: 120px;
+  height: 30px;
+  bottom: 0;
+  left: 6px;
 }
 .cy-searchbox-div{
   position: absolute;
-  top: 1px;
-  left: 55px;
+  top: 0;
+  left: 0;
   border: 1px dotted gray;
 }
 .cy-searchbox-div input{
-  width: 80px;
+  width: 100px;
 }
 .cy-searchbox-querybox{
   margin: 0;

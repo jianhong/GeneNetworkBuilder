@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.17.4
+-----------------------
+    o add cytoscape-exportbox
+    
 CHANGES IN VERSION 1.17.3
 -----------------------
     o make the local copy of javascript library

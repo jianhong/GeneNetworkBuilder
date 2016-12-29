@@ -63,6 +63,7 @@ SOFTWARE.
           var $searchbox = $('<div class="cy-searchbox-div"></div>');
           $searchboxWrapper.append($searchbox);
           
+          $container.css('position', 'relative');
           $searchbox.css('position', 'absolute');
           
           if( options.searchboxOnly){
