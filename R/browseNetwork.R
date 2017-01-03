@@ -180,7 +180,8 @@ browseNetwork <- function(gR = graphNEL(),
 #'
 #' @export
 browseNetworkOutput <- function(outputId, width = '100%', height = '400px'){
-  htmlwidgets::shinyWidgetOutput(outputId, 'browseNetwork', width, height, package = 'browseNetwork')
+  htmlwidgets::shinyWidgetOutput(outputId, 'browseNetwork', width, height, 
+                                 package = 'GeneNetworkBuilder')
 }
 
 #' @rdname browseNetwork-shiny

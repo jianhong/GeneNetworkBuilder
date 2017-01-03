@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.17.5
+-----------------------
+    o fix a bug in browseNetworkOutput
+    
 CHANGES IN VERSION 1.17.4
 -----------------------
     o add cytoscape-exportbox
