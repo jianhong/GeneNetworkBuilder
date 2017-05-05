@@ -50,7 +50,7 @@ browseNetwork(gR)
 # Using data from STRING 
 
 ```{r STRING}
-try{ ## just in case STRINGdb not work
+try({ ## just in case STRINGdb not work
     library(STRINGdb)
     string_db <- STRINGdb$new( version="10", species=9606,
                            score_threshold=400)
@@ -82,6 +82,6 @@ try{ ## just in case STRINGdb not work
     gR<-polishNetwork(cifNetwork)
     ## browse network
     browseNetwork(gR)
-}
+})
 
 ```
