@@ -50,11 +50,11 @@ browseNetwork(gR)
 # Using data from STRING 
 
 ```{r STRING}
-library(STRINGdb)
-string_db <- STRINGdb$new( version="10", species=9606,
-                           score_threshold=400)
-data(diff_exp_example1)
 try{ ## just in case STRINGdb not work
+    library(STRINGdb)
+    string_db <- STRINGdb$new( version="10", species=9606,
+                           score_threshold=400)
+    data(diff_exp_example1)
     example1_mapped <- string_db$map( diff_exp_example1, "gene", removeUnmappedRows = TRUE )
     i <- string_db$get_interactions(example1_mapped$STRING_id)
     rootgene <- sample(i[, 1], 1) # random set a rootgene. It should be set by your experiment.
