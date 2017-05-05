@@ -50,35 +50,37 @@ browseNetwork(gR)
 # Using data from STRING 
 
 ```{r STRING}
-library(STRINGdb)
-string_db <- STRINGdb$new( version="10", species=9606,
+try({ ## just in case STRINGdb not work
+    library(STRINGdb)
+    string_db <- STRINGdb$new( version="10", species=9606,
                            score_threshold=400)
-data(diff_exp_example1)
-example1_mapped <- string_db$map( diff_exp_example1, "gene", removeUnmappedRows = TRUE )
-i <- string_db$get_interactions(example1_mapped$STRING_id)
-rootgene <- sample(i[, 1], 1) # random set a rootgene. It should be set by your experiment.
-TFbindingTable <- i[i[, 1] == rootgene, c("from", "to")]
-interactionmap <- i[, c("from", "to")]
-sifNetwork<-buildNetwork(TFbindingTable=TFbindingTable, 
-                        interactionmap=interactionmap, level=2)
-## filter network
-colnames(example1_mapped) <- c("gene", "P.Value", "logFC", "symbols")
-## unique expression data by symbols column
-expressionData <- uniqueExprsData(example1_mapped, 
-                                   method = 'Max', 
-                                   condenseName = "logFC")
-## merge binding table with expression data by symbols column
-cifNetwork<-filterNetwork(rootgene=rootgene, 
-                          sifNetwork=sifNetwork, 
-                          exprsData=expressionData, mergeBy="symbols",
-                          miRNAlist=character(0), 
-                          tolerance=1, cutoffPVal=0.01, cutoffLFC=1)
-## convert the id back to symbol
-IDsMap <- expressionData$gene
-names(IDsMap) <- expressionData$symbols
-cifNetwork <- convertID(cifNetwork, IDsMap)
-## polish network
-gR<-polishNetwork(cifNetwork)
-## browse network
-browseNetwork(gR)
+    data(diff_exp_example1)
+    example1_mapped <- string_db$map( diff_exp_example1, "gene", removeUnmappedRows = TRUE )
+    i <- string_db$get_interactions(example1_mapped$STRING_id)
+    rootgene <- sample(i[, 1], 1) # random set a rootgene. It should be set by your experiment.
+    TFbindingTable <- i[i[, 1] == rootgene, c("from", "to")]
+    interactionmap <- i[, c("from", "to")]
+    sifNetwork<-buildNetwork(TFbindingTable=TFbindingTable, 
+                            interactionmap=interactionmap, level=2)
+    ## filter network
+    colnames(example1_mapped) <- c("gene", "P.Value", "logFC", "symbols")
+    ## unique expression data by symbols column
+    expressionData <- uniqueExprsData(example1_mapped, 
+                                       method = 'Max', 
+                                       condenseName = "logFC")
+    ## merge binding table with expression data by symbols column
+    cifNetwork<-filterNetwork(rootgene=rootgene, 
+                              sifNetwork=sifNetwork, 
+                              exprsData=expressionData, mergeBy="symbols",
+                              miRNAlist=character(0), 
+                              tolerance=1, cutoffPVal=0.01, cutoffLFC=1)
+    ## convert the id back to symbol
+    IDsMap <- expressionData$gene
+    names(IDsMap) <- expressionData$symbols
+    cifNetwork <- convertID(cifNetwork, IDsMap)
+    ## polish network
+    gR<-polishNetwork(cifNetwork)
+    ## browse network
+    browseNetwork(gR)
+})
 ```

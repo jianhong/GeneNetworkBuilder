@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.19.1
+-----------------------
+    o Fix the problem when STRINGdb not work.
+    
 CHANGES IN VERSION 1.17.5
 -----------------------
     o fix a bug in browseNetworkOutput
