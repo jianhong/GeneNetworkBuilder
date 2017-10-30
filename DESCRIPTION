@@ -1,6 +1,6 @@
 Package: GeneNetworkBuilder
 Type: Package
-Version: 1.19.1
+Version: 1.20.0
 Date: 2017-05-05
 Title: Build Regulatory Network from ChIP-chip/ChIP-seq and Expression
     Data
