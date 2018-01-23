@@ -25,4 +25,3 @@ head(ce.IDsMap)
 
 }
 \keyword{datasets}
-

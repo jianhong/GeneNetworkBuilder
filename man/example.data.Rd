@@ -32,4 +32,3 @@ head(example.data$hs.exprData)
 
 }
 \keyword{datasets}
-

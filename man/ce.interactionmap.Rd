@@ -24,4 +24,3 @@ head(ce.interactionmap)
 
 }
 \keyword{datasets}
-

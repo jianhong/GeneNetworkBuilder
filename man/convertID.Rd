@@ -29,4 +29,3 @@ bind<-cbind(from="daf-16", to=c("fkh-7", "hlh-13", "mxl-3", "nhr-3", "lfi-1"))
 convertID(toupper(bind), ce.IDsMap, ByName=c("from", "to"))
 }
 \keyword{convert}
-

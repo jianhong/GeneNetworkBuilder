@@ -12,17 +12,20 @@
 #' data("example.data")
 #' example.microarrayData<-uniqueExprsData(example.data$example.microarrayData,
 #'                                         method="Max", condenseName='logFC')
+#'
 #' @export
 #' @importFrom plyr . ddply
+#' @importFrom graphics symbols
+#' @importFrom stats median
 #' 
 uniqueExprsData<-function(exprsData, method='Max', condenseName='logFC'){
     if(!(method %in% c("Max", "Median", "Min"))){
         stop("method must be Max, Median or Min")
     }
-    if(!GeneNetworkBuilder:::checkCName("symbols", exprsData)){
+    if(!checkCName("symbols", exprsData)){
         stop("symbols is not a valide colname of exprsData")
     }
-    if(!GeneNetworkBuilder:::checkCName(condenseName, exprsData)){
+    if(!checkCName(condenseName, exprsData)){
         stop(paste(condenseName," is not a valide colname of exprsData"))
     }
     if(!is.data.frame(exprsData)){
@@ -33,13 +36,13 @@ uniqueExprsData<-function(exprsData, method='Max', condenseName='logFC'){
     }
     exprsData<-switch(method,
                       Max   =plyr::ddply(exprsData, plyr::.(symbols), 
-                                         GeneNetworkBuilder:::getMax, 
+                                         getMax, 
                                          condenseName),
                       Median=plyr::ddply(exprsData, plyr::.(symbols), 
-                                         GeneNetworkBuilder:::getMedian, 
+                                         getMedian, 
                                          condenseName),
                       Min   =plyr::ddply(exprsData, plyr::.(symbols),
-                                         GeneNetworkBuilder:::getMin, 
+                                         getMin, 
                                          condenseName)
                            )
     exprsData
@@ -67,7 +70,7 @@ convertID<-function(x, IDsMap, ByName=c("from", "to")){
         stop("invalide IDsMap")
     }
     for(i in 1:length(ByName)){
-        if(!GeneNetworkBuilder:::checkCName(ByName[i],x)){
+        if(!checkCName(ByName[i],x)){
             stop(paste(ByName[i],"is not a valide colname of x"))
         }
         x[,ByName[i]]<-IDsMap[as.character(x[,ByName[i]])]
@@ -92,7 +95,7 @@ convertID<-function(x, IDsMap, ByName=c("from", "to")){
 #' @export
 
 buildNetwork<-function(TFbindingTable, interactionmap, level=3){
-    GeneNetworkBuilder:::checkMap(interactionmap, TFbindingTable)
+    checkMap(interactionmap, TFbindingTable)
     if(level>0){
         y<-interactionmap[interactionmap[ , "from"] %in% unique(as.character(TFbindingTable[ , "to"])), 1:2,drop=F]
         y<-unique(y)
@@ -145,30 +148,30 @@ buildNetwork<-function(TFbindingTable, interactionmap, level=3){
 #' data("ce.IDsMap")
 #' sifNetwork<-buildNetwork(example.data$ce.bind, ce.interactionmap, level=2)
 #' cifNetwork<-filterNetwork(rootgene=ce.IDsMap["DAF-16"], sifNetwork=sifNetwork, 
-#'                          exprsData=uniqueExprsData(example.data$ce.exprData, "Max", condenseName='logFC'),
-#'                          mergeBy="symbols",
-#'                          miRNAlist=as.character(ce.miRNA.map[ , 1]), tolerance=1)
+#'   exprsData=uniqueExprsData(example.data$ce.exprData, "Max", condenseName='logFC'),
+#'   mergeBy="symbols",
+#'   miRNAlist=as.character(ce.miRNA.map[ , 1]), tolerance=1)
 #' @keywords network
 #' 
 filterNetwork<-function(rootgene, sifNetwork, exprsData, mergeBy="symbols", miRNAlist, remove_miRNA=FALSE,
                     tolerance=0, cutoffPVal=0.01, cutoffLFC=0.5, minify=TRUE, miRNAtol=FALSE)
 {
-    GeneNetworkBuilder:::checkMCName(sifNetwork)
+    checkMCName(sifNetwork)
     if(!missing(miRNAlist)){
         if(!is.vector(miRNAlist)){
             stop("miRNAlist should be a vector")
         }
     }
-    if(!GeneNetworkBuilder:::checkCName(mergeBy, exprsData)){
+    if(!checkCName(mergeBy, exprsData)){
         stop(paste(mergeBy, "is not a column name of exprsData"))
     }
-    if(!GeneNetworkBuilder:::checkCName("logFC", exprsData)){
+    if(!checkCName("logFC", exprsData)){
         stop("logFC is not a column name of exprsData")
     }
     if(!is.numeric(exprsData[ , "logFC"])){
         stop("class of exprsData[ , \"logFC\"] is not a numeric column")
     }
-    if(!GeneNetworkBuilder:::checkCName("P.Value", exprsData)){
+    if(!checkCName("P.Value", exprsData)){
         stop("P.Value is not a column name of exprsData")
     }
     if(!is.numeric(exprsData[ , "P.Value"])){
@@ -261,6 +264,8 @@ filterNetwork<-function(rootgene, sifNetwork, exprsData, mergeBy="symbols", miRN
 #' @param ... any parameters can be passed to \link[graph:graph.par]{graph.par}
 #' @return An object of graphNEL class of the network
 #' @import graph
+#' @importFrom grDevices colorRampPalette
+#' @importFrom methods new
 #' @export
 #' @examples 
 #' data("ce.miRNA.map")
@@ -269,9 +274,9 @@ filterNetwork<-function(rootgene, sifNetwork, exprsData, mergeBy="symbols", miRN
 #' data("ce.IDsMap")
 #' sifNetwork<-buildNetwork(example.data$ce.bind, ce.interactionmap, level=2)
 #' cifNetwork<-filterNetwork(rootgene=ce.IDsMap["DAF-16"], sifNetwork=sifNetwork, 
-#'                          exprsData=uniqueExprsData(example.data$ce.exprData, "Max", condenseName='logFC'),
-#'                          mergeBy="symbols",
-#'                          miRNAlist=as.character(ce.miRNA.map[ , 1]), tolerance=1)
+#'   exprsData=uniqueExprsData(example.data$ce.exprData, "Max", condenseName='logFC'),
+#'   mergeBy="symbols",
+#'   miRNAlist=as.character(ce.miRNA.map[ , 1]), tolerance=1)
 #' gR<-polishNetwork(cifNetwork)
 #' ##	browseNetwork(gR)
 #' @keywords network

@@ -27,4 +27,3 @@ data("example.data")
 xx<-buildNetwork(example.data$ce.bind, ce.interactionmap, level=2)
 }
 \keyword{network}
-

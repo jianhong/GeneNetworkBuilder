@@ -23,4 +23,3 @@ head(ce.miRNA.map)
 
 }
 \keyword{datasets}
-

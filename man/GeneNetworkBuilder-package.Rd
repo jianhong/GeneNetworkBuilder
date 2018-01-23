@@ -13,4 +13,12 @@ genes of potential targets of one TF from ChIP-chip or
 ChIP-seq, and the gene expression results, GeneNetworkBuilder
 generates a regulatory network of the TF.
 }
+\author{
+\strong{Maintainer}: Jianhong Ou Developer \email{jianhong.ou@umassmed.edu}
 
+Authors:
+\itemize{
+  \item Lihua Julie Zhu Developer \email{Julie.Zhu@umassmed.edu}
+}
+
+}

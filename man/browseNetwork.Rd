@@ -36,11 +36,10 @@ data("ce.interactionmap")
 data("ce.IDsMap")
 sifNetwork<-buildNetwork(example.data$ce.bind, ce.interactionmap, level=2)
 cifNetwork<-filterNetwork(rootgene=ce.IDsMap["DAF-16"], sifNetwork=sifNetwork, 
-                        exprsData=uniqueExprsData(example.data$ce.exprData, "Max", condenseName='logFC'),
-                        mergeBy="symbols",
-                        miRNAlist=as.character(ce.miRNA.map[ , 1]), tolerance=1)
+  exprsData=uniqueExprsData(example.data$ce.exprData, "Max", condenseName='logFC'),
+  mergeBy="symbols",
+  miRNAlist=as.character(ce.miRNA.map[ , 1]), tolerance=1)
 gR<-polishNetwork(cifNetwork)
 browseNetwork(gR)
 }
 \keyword{plot}
-

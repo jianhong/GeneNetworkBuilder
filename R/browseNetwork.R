@@ -16,6 +16,7 @@
 #'         into HTML in a variety of contexts including the R console, 
 #'         within R Markdown documents, and within Shiny output bindings.
 #' @export
+#' @importFrom methods is getPackageName
 #' @examples 
 #' data("ce.miRNA.map")
 #' data("example.data")
@@ -23,9 +24,9 @@
 #' data("ce.IDsMap")
 #' sifNetwork<-buildNetwork(example.data$ce.bind, ce.interactionmap, level=2)
 #' cifNetwork<-filterNetwork(rootgene=ce.IDsMap["DAF-16"], sifNetwork=sifNetwork, 
-#'                         exprsData=uniqueExprsData(example.data$ce.exprData, "Max", condenseName='logFC'),
-#'                         mergeBy="symbols",
-#'                         miRNAlist=as.character(ce.miRNA.map[ , 1]), tolerance=1)
+#'   exprsData=uniqueExprsData(example.data$ce.exprData, "Max", condenseName='logFC'),
+#'   mergeBy="symbols",
+#'   miRNAlist=as.character(ce.miRNA.map[ , 1]), tolerance=1)
 #' gR<-polishNetwork(cifNetwork)
 #' browseNetwork(gR)
 #' @keywords plot

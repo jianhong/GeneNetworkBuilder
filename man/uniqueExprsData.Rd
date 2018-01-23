@@ -23,6 +23,6 @@ get unique the microarray data for each gene id.
 data("example.data")
 example.microarrayData<-uniqueExprsData(example.data$example.microarrayData,
                                         method="Max", condenseName='logFC')
+
 }
 \keyword{network}
-

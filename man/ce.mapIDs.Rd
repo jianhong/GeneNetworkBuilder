@@ -23,4 +23,3 @@ head(ce.mapIDs)
 
 }
 \keyword{datasets}
-

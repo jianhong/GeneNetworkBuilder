@@ -26,4 +26,3 @@ head(hs.interactionmap)
 
 }
 \keyword{datasets}
-

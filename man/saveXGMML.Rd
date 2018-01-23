@@ -17,4 +17,3 @@ saveXGMML(network, file, ...)
 Save graph into xgmml format.
 }
 \keyword{IO}
-
