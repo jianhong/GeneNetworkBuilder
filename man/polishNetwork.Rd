@@ -29,7 +29,7 @@ nodeBorderColor's element must be gene and miRNA}
 
 \item{edgelwd}{the width of edge}
 
-\item{...}{any parameters can be passed to \link[graph:graph.par]{graph.par}}
+\item{...}{any parameters can be passed to \link[graph:settings]{graph.par}}
 }
 \value{
 An object of graphNEL class of the network

@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.21.2
+-----------------------
+    o Fix the problem for missing links in documentation.
+    
 CHANGES IN VERSION 1.21.1
 -----------------------
     o Fix the problem for missing links in documentation.

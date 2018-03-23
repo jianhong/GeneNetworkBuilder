@@ -261,7 +261,7 @@ filterNetwork<-function(rootgene, sifNetwork, exprsData, mergeBy="symbols", miRN
 #' @param nodeBorderColor a list of broder node color set. 
 #'                        nodeBorderColor's element must be gene and miRNA
 #' @param edgelwd the width of edge
-#' @param ... any parameters can be passed to \link[graph:graph.par]{graph.par}
+#' @param ... any parameters can be passed to \link[graph:settings]{graph.par}
 #' @return An object of graphNEL class of the network
 #' @import graph
 #' @importFrom grDevices colorRampPalette

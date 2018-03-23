@@ -5,7 +5,7 @@
 #' @import htmlwidgets
 #' @import Rgraphviz
 #'
-#' @param gR an object of \link[graph]{graphNEL}
+#' @param gR an object of \link[graph:graphNEL-class]{graphNEL}
 #' @param layoutType layout type. see \link[Rgraphviz]{GraphvizLayouts}
 #' @param width width of the figure
 #' @param height height of the figure
