@@ -12,8 +12,8 @@ Appliation for discovering direct or indirect targets of transcription factors u
 To install this package, start R and enter:
 
 ```r
-library(BiocInstaller)
-biocLite("GeneNetworkBuilder")
+library(BiocManager)
+BiocManager::install("GeneNetworkBuilder")
 ```
 
 ## Documentation
