@@ -5,7 +5,8 @@
 \title{browse network}
 \usage{
 browseNetwork(gR = graphNEL(), layoutType = c("fdp", "dot", "neato",
-  "twopi", "circo"), width = NULL, height = NULL, maxNodes = 500, ...)
+  "twopi", "circo"), width = NULL, height = NULL, maxNodes = 500,
+  ...)
 }
 \arguments{
 \item{gR}{an object of \link[graph:graphNEL-class]{graphNEL}}

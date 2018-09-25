@@ -4,10 +4,10 @@
 \alias{polishNetwork}
 \title{generate an object of grahpNEL to represent the regulation network}
 \usage{
-polishNetwork(cifNetwork, nodesDefaultSize = 48, useLogFCAsWeight = FALSE,
-  nodecolor = colorRampPalette(c("green", "yellow", "red"))(5),
-  nodeBg = "white", nodeBorderColor = list(gene = "darkgreen", miRNA =
-  "darkblue"), edgelwd = 0.25, ...)
+polishNetwork(cifNetwork, nodesDefaultSize = 48,
+  useLogFCAsWeight = FALSE, nodecolor = colorRampPalette(c("green",
+  "yellow", "red"))(5), nodeBg = "white", nodeBorderColor = list(gene =
+  "darkgreen", miRNA = "darkblue"), edgelwd = 0.25, ...)
 }
 \arguments{
 \item{cifNetwork}{dataframe used to draw network graph. column names of 

@@ -1,6 +1,6 @@
 Package: GeneNetworkBuilder
 Type: Package
-Version: 1.23.1
+Version: 1.23.2
 Title: Build Regulatory Network from ChIP-chip/ChIP-seq and Expression
     Data
 Authors@R: c(person("Jianhong Ou", "Developer", role = c("aut", "cre"),
@@ -41,4 +41,4 @@ License: GPL (>= 2)
 Lazyload: yes
 biocViews: Sequencing, Microarray, GraphAndNetwork
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0

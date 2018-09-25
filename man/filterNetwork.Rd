@@ -4,8 +4,8 @@
 \alias{filterNetwork}
 \title{filter the regulatory network table by expression profile}
 \usage{
-filterNetwork(rootgene, sifNetwork, exprsData, mergeBy = "symbols", miRNAlist,
-  remove_miRNA = FALSE, tolerance = 0, cutoffPVal = 0.01,
+filterNetwork(rootgene, sifNetwork, exprsData, mergeBy = "symbols",
+  miRNAlist, remove_miRNA = FALSE, tolerance = 0, cutoffPVal = 0.01,
   cutoffLFC = 0.5, minify = TRUE, miRNAtol = FALSE)
 }
 \arguments{

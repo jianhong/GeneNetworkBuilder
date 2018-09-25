@@ -43,8 +43,10 @@ RcppExport SEXP filterNodes(SEXP xx_from, SEXP xx_to, SEXP xx_miRNA, SEXP xx_log
 		ids.push_back(j);
 	}
 	vector<int>::iterator it;
+	int oldsize, newsize;
 	while(!ids.empty()){
 		it=ids.begin();
+	  oldsize=(int)ids.size();
 		while (it!=ids.end()) {
 			node* par=gt.Search(from[*it]);
 			if (par!=NULL) {
@@ -55,6 +57,13 @@ RcppExport SEXP filterNodes(SEXP xx_from, SEXP xx_to, SEXP xx_miRNA, SEXP xx_log
 			} else {
 				it++;
 			}
+		}
+		newsize=(int)ids.size();
+		if(newsize == oldsize){//can not find parents any more.
+		  it=ids.begin();
+		  while (it!=ids.end()) {
+		    it=ids.erase(it);
+		  }
 		}
 	}
 	//filter the nodes
