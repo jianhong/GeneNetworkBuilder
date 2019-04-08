@@ -1,13 +1,13 @@
 Package: GeneNetworkBuilder
 Type: Package
-Version: 1.24.0
+Version: 1.24.1
 Title: Build Regulatory Network from ChIP-chip/ChIP-seq and Expression
     Data
 Authors@R: c(person("Jianhong Ou", "Developer", role = c("aut", "cre"),
-        email = "jianhong.ou@umassmed.edu"), person("Lihua Julie Zhu",
+        email = "jianhong.ou@duke.edu"), person("Lihua Julie Zhu",
         "Developer", role = "aut", email = "Julie.Zhu@umassmed.edu"))
 Author: Jianhong Ou , Haibo Liu, Heidi A Tissenbaum and Lihua Julie Zhu
-Maintainer: Jianhong Ou <jianhong.ou@umassmed.edu>
+Maintainer: Jianhong Ou <jianhong.ou@duke.edu>
 Imports:
     plyr,
     graph,
@@ -41,4 +41,4 @@ License: GPL (>= 2)
 Lazyload: yes
 biocViews: Sequencing, Microarray, GraphAndNetwork
 VignetteBuilder: knitr
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1

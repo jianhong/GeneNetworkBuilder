@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.24.1
+-----------------------
+    o Update author's email.
+
 CHANGES IN VERSION 1.23.2
 -----------------------
     o Fix the problem for when the interaction network is breaking.
