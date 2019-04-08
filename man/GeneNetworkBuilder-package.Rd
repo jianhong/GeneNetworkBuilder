@@ -14,7 +14,7 @@ ChIP-seq, and the gene expression results, GeneNetworkBuilder
 generates a regulatory network of the TF.
 }
 \author{
-\strong{Maintainer}: Jianhong Ou Developer \email{jianhong.ou@umassmed.edu}
+\strong{Maintainer}: Jianhong Ou Developer \email{jianhong.ou@duke.edu}
 
 Authors:
 \itemize{
