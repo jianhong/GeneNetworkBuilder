@@ -148,6 +148,8 @@ cifNetwork<-convertID(cifNetwork, ce.mapIDs, ByName=c("from","to"))
 gR<-polishNetwork(cifNetwork, nodecolor=colorRampPalette(c("green", "yellow", "red"))(10))
 ##plot the figure
 browseNetwork(gR)
+```
+```{r}
 ## or plot by Rgraphviz
 library(Rgraphviz)
 plotNetwork<-function(gR, layouttype="dot", ...){
@@ -161,6 +163,8 @@ plotNetwork<-function(gR, layouttype="dot", ...){
     renderGraph(g1)
 }
 plotNetwork(gR)
+```
+```{r exportxml}
 ##output file for cytoscape
 exportNetwork(browseNetwork(gR), 
               file="network.xgmml", 
