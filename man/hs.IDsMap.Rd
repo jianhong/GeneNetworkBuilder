@@ -4,7 +4,9 @@
 \name{hs.IDsMap}
 \alias{hs.IDsMap}
 \title{map file for converting gene name or sequence name of \emph{Homo sapiens} to Entrez identifier}
-\format{character vector}
+\format{
+character vector
+}
 \usage{
 hs.IDsMap
 }
@@ -19,4 +21,4 @@ data(hs.IDsMap)
 head(hs.IDsMap)
 
 }
-\keyword{datasets}
+\keyword{data}

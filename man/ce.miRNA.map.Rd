@@ -4,7 +4,9 @@
 \name{ce.miRNA.map}
 \alias{ce.miRNA.map}
 \title{micro RNA of \emph{Caenorhabditis elegans}}
-\format{dataframe}
+\format{
+dataframe
+}
 \source{
 \url{http://www.mirbase.org/}
 }
@@ -22,4 +24,4 @@ data(ce.miRNA.map)
 head(ce.miRNA.map)
 
 }
-\keyword{datasets}
+\keyword{data}

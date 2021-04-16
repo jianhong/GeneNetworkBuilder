@@ -4,9 +4,19 @@
 \alias{filterNetwork}
 \title{filter the regulatory network table by expression profile}
 \usage{
-filterNetwork(rootgene, sifNetwork, exprsData, mergeBy = "symbols",
-  miRNAlist, remove_miRNA = FALSE, tolerance = 0, cutoffPVal = 0.01,
-  cutoffLFC = 0.5, minify = TRUE, miRNAtol = FALSE)
+filterNetwork(
+  rootgene,
+  sifNetwork,
+  exprsData,
+  mergeBy = "symbols",
+  miRNAlist,
+  remove_miRNA = FALSE,
+  tolerance = 0,
+  cutoffPVal = 0.01,
+  cutoffLFC = 0.5,
+  minify = TRUE,
+  miRNAtol = FALSE
+)
 }
 \arguments{
 \item{rootgene}{name of root gene. It must be the ID used in xx regulatory network}

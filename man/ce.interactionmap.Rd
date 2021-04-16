@@ -4,7 +4,9 @@
 \name{ce.interactionmap}
 \alias{ce.interactionmap}
 \title{transcript regulatory map of \emph{Caenorhabditis elegans}}
-\format{datafram}
+\format{
+dataframe
+}
 \source{
 \url{http://edgedb.umassmed.edu}, \url{http://www.ebi.ac.uk/enright-srv/microcosm/htdocs/targets/v5/}
 }
@@ -23,4 +25,4 @@ data(ce.interactionmap)
 head(ce.interactionmap)
 
 }
-\keyword{datasets}
+\keyword{data}

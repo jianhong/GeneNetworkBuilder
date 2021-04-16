@@ -4,7 +4,9 @@
 \name{example.data}
 \alias{example.data}
 \title{example datasets for documentation}
-\format{dataframe}
+\format{
+dataframe
+}
 \usage{
 example.data
 }
@@ -31,4 +33,4 @@ head(example.data$hs.bind)
 head(example.data$hs.exprData)
 
 }
-\keyword{datasets}
+\keyword{data}

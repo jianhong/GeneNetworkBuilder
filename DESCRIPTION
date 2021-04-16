@@ -1,6 +1,6 @@
 Package: GeneNetworkBuilder
 Type: Package
-Version: 1.33.0
+Version: 1.33.1
 Title: GeneNetworkBuilder: a bioconductor package for building regulatory network using ChIP-chip/ChIP-seq data and Gene Expression Data
 Authors@R: c(person("Jianhong Ou", "Developer", role = c("aut", "cre"),
         email = "jianhong.ou@duke.edu"), person("Lihua Julie Zhu",
@@ -30,7 +30,8 @@ Suggests:
     shiny,
     STRINGdb,
     BiocStyle,
-    magick
+    magick,
+    rmarkdown
 LinkingTo: Rcpp
 Description: Appliation for discovering direct or indirect targets of
     transcription factors using ChIP-chip or ChIP-seq, and
@@ -40,6 +41,7 @@ Description: Appliation for discovering direct or indirect targets of
     generates a regulatory network of the TF.
 License: GPL (>= 2)
 Lazyload: yes
+LazyData: true
 biocViews: Sequencing, Microarray, GraphAndNetwork
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1

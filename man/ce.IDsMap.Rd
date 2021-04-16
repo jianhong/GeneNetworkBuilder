@@ -4,7 +4,9 @@
 \name{ce.IDsMap}
 \alias{ce.IDsMap}
 \title{C.elegns gene name to wormbase identifier map}
-\format{character vector}
+\format{
+character vector
+}
 \source{
 \url{http://www.wormbase.org/}
 }
@@ -22,6 +24,5 @@ character vecotr with gene name or sequence name as names and
 \examples{
 data(ce.IDsMap)
 head(ce.IDsMap)
-
 }
-\keyword{datasets}
+\keyword{data}

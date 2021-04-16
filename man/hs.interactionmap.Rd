@@ -4,7 +4,9 @@
 \name{hs.interactionmap}
 \alias{hs.interactionmap}
 \title{transcript regulation map of \emph{Homo sapiens}}
-\format{datafram}
+\format{
+dataframe
+}
 \source{
 \url{http://fantom.gsc.riken.jp/5/}, 
         \url{http://www.ebi.ac.uk/enright-srv/microcosm/htdocs/targets/v5/},
@@ -25,4 +27,4 @@ data(hs.interactionmap)
 head(hs.interactionmap)
 
 }
-\keyword{datasets}
+\keyword{data}

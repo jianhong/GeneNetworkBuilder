@@ -4,7 +4,9 @@
 \name{hs.mapIDs}
 \alias{hs.mapIDs}
 \title{map file for converting from Entrez identifier to \emph{Homo sapiens} gene name}
-\format{character vector}
+\format{
+character vector
+}
 \usage{
 hs.mapIDs
 }
@@ -19,4 +21,4 @@ data(hs.mapIDs)
 head(hs.mapIDs)
 
 }
-\keyword{datasets}
+\keyword{data}

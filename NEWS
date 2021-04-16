@@ -1,5 +1,9 @@
 CHANGES IN VERSION 1.29.1
 -----------------------
+    o Add rmarkdown into Suggests
+    
+CHANGES IN VERSION 1.29.1
+-----------------------
     o Add BiocStyle and magick into Suggests
     
 CHANGES IN VERSION 1.25.1

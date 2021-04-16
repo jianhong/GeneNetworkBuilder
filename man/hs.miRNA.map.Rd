@@ -4,7 +4,9 @@
 \name{hs.miRNA.map}
 \alias{hs.miRNA.map}
 \title{micro RNA of \emph{Homo sapiens}}
-\format{dataframe}
+\format{
+dataframe
+}
 \source{
 \url{http://www.mirbase.org/}
 }
@@ -22,4 +24,4 @@ data(hs.miRNA.map)
 head(hs.miRNA.map)
 
 }
-\keyword{datasets}
+\keyword{data}

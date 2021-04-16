@@ -4,7 +4,9 @@
 \name{ce.mapIDs}
 \alias{ce.mapIDs}
 \title{map file for converting from wormbase identifier to \emph{Caenorhabditis elegans} gene name}
-\format{character vector}
+\format{
+character vector
+}
 \source{
 \url{http://www.wormbase.org/}
 }
@@ -22,4 +24,4 @@ data(ce.mapIDs)
 head(ce.mapIDs)
 
 }
-\keyword{datasets}
+\keyword{data}
