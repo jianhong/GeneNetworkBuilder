@@ -256,7 +256,8 @@ filterNetwork<-function(rootgene, sifNetwork, exprsData, mergeBy="symbols", miRN
 #'                         If TURE, use logFC value as weight.
 #'                         If FALSE, use constant 1 as weight.
 #' @param nodecolor a character vector of color set. 
-#'                  The node color will be mapped to color set by log fold change
+#'                  The node color will be mapped to color set by log fold change.
+#'                  Or the column names for the colors.
 #' @param nodeBg background of node
 #' @param nodeBorderColor a list of broder node color set. 
 #'                        nodeBorderColor's element must be gene and miRNA
@@ -294,8 +295,13 @@ polishNetwork<-function(cifNetwork,
   if(length(intersect(c("from", "to", "logFC", "miRNA"), colnames(cifNetwork)))<4){
     stop("colnames of cifNetwork must contain 'from', 'to', 'logFC' and 'miRNA'");
   }
+  preDefinedColor <- FALSE
   if(length(nodecolor) < 2){
-    stop("nodecolor should have more than 1 elements")
+    if(nodecolor %in% colnames(cifNetwork)){
+      preDefinedColor <- TRUE
+    }else{
+      stop("nodecolor should have more than 1 elements")
+    }
   }
   if(length(setdiff(c('gene', 'miRNA'), names(nodeBorderColor))) > 0){
     stop("nodeBorderColor's element must be 'gene' and 'miRNA'")
@@ -337,35 +343,67 @@ polishNetwork<-function(cifNetwork,
   for(i in unique(as.character(cifNetwork$from))){
     nodeData(gR, n=i, attr="size")<-ceiling(5*length(edL[[i]]$edges)/length(node)) * nodesDefaultSize/2 + nodesDefaultSize
   }
-  ## set node color    
-  nodeDataDefaults(gR, attr="fill")<-nodeBg
-  lfcMax<-ceiling(max(abs(cifNetwork[!is.na(cifNetwork$logFC),"logFC"])))
-  lfcSeq<-seq(-1*lfcMax,lfcMax,length.out=length(nodecolor)+1)
-  colset<-unique(cifNetwork[!is.na(cifNetwork$logFC),c("to","logFC")])
-  colset<-apply(colset, 1, function(.ele,color,lfcSeq){
-    id=0
-    for(i in 1:length(lfcSeq)){
-      .elelfc<-as.numeric(as.character(.ele[2]))
-      if(lfcSeq[i]<=.elelfc & lfcSeq[i+1]>=.elelfc){
-        id=i
-        break
+  ## add additional message 
+  additionalInfoCol <- colnames(cifNetwork)
+  additionalInfoCol <-
+    additionalInfoCol[!additionalInfoCol %in%
+                        c("to", "from", "gene", "P.Value", "logFC", "miRNA",
+                          "dir")]
+  additionalInfoCol <- additionalInfoCol[
+    vapply(additionalInfoCol, FUN=function(.e){
+      inherits(cifNetwork[, .e], c("character", "factor")) &&
+        length(unique(cifNetwork[, .e])) > 1
+    }, FUN.VALUE=FALSE)
+  ]
+  if(length(additionalInfoCol)){
+    for(j in additionalInfoCol){
+      nodeDataDefaults(gR, attr=j)<-""
+      for(i in unique(as.character(cifNetwork$from))){
+        nodeData(gR, n=i, attr=j) <-
+          cifNetwork[match(i, cifNetwork$to), j]
       }
     }
-    if(id!=0){
-      c(.ele,nodecolor[id])
-    }else{
-      c(.ele,nodeBg)
-    }
-  },nodecolor,lfcSeq)
-  colors<-colset[3,]
-  names(colors)<-colset[1,]
-  for(i in names(colors)){
-    nodeData(gR, n=i, attr="fill")<-colors[i]
   }
-  colset<-node[!node %in% names(colors)]
-  names(colset)<-colset
-  colset<-nodeBg
-  colors<-c(colors,colset)
+  ## set node color    
+  nodeDataDefaults(gR, attr="fill")<-nodeBg
+  if(!preDefinedColor){
+    lfcMax<-ceiling(max(abs(cifNetwork[!is.na(cifNetwork$logFC),"logFC"])))
+    lfcSeq<-seq(-1*lfcMax,lfcMax,length.out=length(nodecolor)+1)
+    colset<-unique(cifNetwork[!is.na(cifNetwork$logFC),c("to","logFC")])
+    colset<-apply(colset, 1, function(.ele,color,lfcSeq){
+      id=0
+      for(i in 1:length(lfcSeq)){
+        .elelfc<-as.numeric(as.character(.ele[2]))
+        if(lfcSeq[i]<=.elelfc & lfcSeq[i+1]>=.elelfc){
+          id=i
+          break
+        }
+      }
+      if(id!=0){
+        c(.ele,nodecolor[id])
+      }else{
+        c(.ele,nodeBg)
+      }
+    },nodecolor,lfcSeq)
+    colors<-colset[3,]
+    names(colors)<-colset[1,]
+    for(i in names(colors)){
+      nodeData(gR, n=i, attr="fill")<-colors[i]
+    }
+    colset<-node[!node %in% names(colors)]
+    names(colset)<-colset
+    colset<-nodeBg
+    colors<-c(colors,colset)
+  }else{
+    colors <- cifNetwork[match(node, cifNetwork$to), nodecolor]
+    names(colors) <- node
+    colors[is.na(colors)] <- nodeBg
+    for(i in node) {
+      tmp <- cifNetwork[match(i, cifNetwork$to), nodecolor]
+      nodeData(gR, n=i, attr="fill") <- 
+        ifelse(is.na(tmp), nodeBg, tmp)
+    }
+  }
   ## set node border color    
   miRNAs<-unique(as.character(cifNetwork[cifNetwork[,"miRNA"],"to"]))
   nodeBC<-character(length(node))
@@ -379,6 +417,7 @@ polishNetwork<-function(cifNetwork,
       nodeBC[i]<-nodeBorderColor$gene
     }
   }
+  
   graph::nodeRenderInfo(gR) <- list(col=nodeBC, fill=colors, ...)
   graph::edgeRenderInfo(gR) <- list(lwd=edgelwd)
   gR

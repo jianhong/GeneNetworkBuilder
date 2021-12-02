@@ -26,7 +26,8 @@ If TURE, use logFC value as weight.
 If FALSE, use constant 1 as weight.}
 
 \item{nodecolor}{a character vector of color set. 
-The node color will be mapped to color set by log fold change}
+The node color will be mapped to color set by log fold change.
+Or the column names for the colors.}
 
 \item{nodeBg}{background of node}
 

@@ -44,4 +44,4 @@ Lazyload: yes
 LazyData: true
 biocViews: Sequencing, Microarray, GraphAndNetwork
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

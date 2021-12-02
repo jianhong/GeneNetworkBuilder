@@ -6,7 +6,7 @@
 
 using namespace Rcpp;
 using namespace std;
-
+// [[Rcpp::export]]
 RcppExport SEXP filterNodes(SEXP xx_from, SEXP xx_to, SEXP xx_miRNA, SEXP xx_logFC, SEXP xx_pval, SEXP xx_dir, SEXP rows, 
 							SEXP rootgene, SEXP rootlogFC, SEXP tol, SEXP minify, SEXP miRNAtol, SEXP lFC, SEXP pVAL)
 {

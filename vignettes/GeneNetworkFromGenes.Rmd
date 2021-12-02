@@ -49,8 +49,19 @@ try({ ## just in case STRINGdb not work
     IDsMap <- expressionData$gene
     names(IDsMap) <- expressionData$symbols
     cifNetwork <- convertID(cifNetwork, IDsMap)
+    ## add additional info for searching, any character content columns
+    cifNetwork$info1 <- sample(c("groupA", "groupB"),
+                               size = nrow(cifNetwork),
+                               replace = TRUE)
     ## polish network
     gR<-polishNetwork(cifNetwork)
+    ## browse network
+    browseNetwork(gR)
+    
+    ## try predifined colors
+    cifNetwork$color <- sample(rainbow(7), nrow(cifNetwork), replace = TRUE)
+    ## polish network
+    gR<-polishNetwork(cifNetwork, nodecolor="color")
     ## browse network
     browseNetwork(gR)
 })
