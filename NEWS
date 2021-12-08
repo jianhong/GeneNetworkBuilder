@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.37.2
+-----------------------
+    o Add layout button for htmlwidgets
+    
 CHANGES IN VERSION 1.37.1
 -----------------------
     o Fix the version issue of STRINGdb

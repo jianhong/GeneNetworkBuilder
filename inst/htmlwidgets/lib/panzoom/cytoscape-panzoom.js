@@ -66,7 +66,8 @@ SOFTWARE.
     sliderHandleIcon: 'fa fa-minus',
     zoomInIcon: 'fa fa-plus',
     zoomOutIcon: 'fa fa-minus',
-    resetIcon: 'fa fa-expand'
+    resetIcon: 'fa fa-expand',
+    layout: 'fa fa-cogs'
   };
 
   var panzoom = function( params, $ ){
@@ -153,7 +154,11 @@ SOFTWARE.
 
           // add base html elements
           /////////////////////////
-
+          var $pLayout = $('<div class="cy-panzoom-pan-layout cy-panzoom-zoom-button"><span class="icon ' + options.layout + '"></span></div>');
+          $panzoom.append( $pLayout);
+          var $dialog=$('<div class="cy-panzoom-pan-layout-dialog-modal">Changing layout now...</div>');
+          $container.append($dialog);
+          
           var $zoomIn = $('<div class="cy-panzoom-zoom-in cy-panzoom-zoom-button"><span class="icon '+ options.zoomInIcon +'"></span></div>');
           $panzoom.append( $zoomIn );
 
@@ -322,8 +327,45 @@ SOFTWARE.
           windowBind("mouseup blur", function(){
             donePanning();
           });
-
-
+          
+          // set up layouts behaviour
+          //////////////////////////
+          
+          $pLayout.bind('mousedown', function(){
+            var layouts=["preset", "random","grid","circle",
+                         "concentric","cola",
+                         "cose","cose-bilkent","dagre",
+                         "spread"];
+            function centerLayoutDialog(text){
+              var windowWidth = $container.width();
+      				var windowHeight = $container.height();
+      				var popupHeight = $(".cy-panzoom-pan-layout-dialog-modal").height();  
+      				var popupWidth = $(".cy-panzoom-pan-layout-dialog-modal").width();
+      				$(".cy-panzoom-pan-layout-dialog-modal").css({
+      									"position":"absolute",
+      									"top": windowHeight/2-popupHeight/2,
+      									"left":windowWidth/2-popupWidth/2
+      									}).html(text).show();
+            }
+            var layoutstr ="";
+            for(var i=0; i<layouts.length; i++){
+              layoutstr +="<button type='button'>"+layouts[i]+"</botton>";
+            }
+            centerLayoutDialog("<form><fieldset><label>Choose a layout:</label>"+layoutstr+"</fieldset></form>");
+            $(".cy-panzoom-pan-layout-dialog-modal").find("button").on("click", function(e){
+              e.preventDefault();
+              console.log(e);
+              $(".cy-panzoom-pan-layout-dialog-modal").hide();
+              cy.layout({
+        				name: $(this).text()
+        			});
+            });
+      			cy.bind("layoutstart",function(){
+      			  centerLayoutDialog("Changing layout now...");
+      			}).bind("layoutstop",function(){
+      				$(".cy-panzoom-pan-layout-dialog-modal").hide();
+      			});
+          });
 
           // set up slider behaviour
           //////////////////////////

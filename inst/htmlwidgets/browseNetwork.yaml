@@ -35,3 +35,27 @@ dependencies:
     src: "htmlwidgets/lib/exportbox"
     script: 'cytoscape-exportbox.js'
     stylesheet: 'cytoscape-exportbox.css'
+  - name: cola
+    version: 3.0.0
+    src: "htmlwidgets/lib/layout"
+    script: 'cola.v3.min.js'
+  - name: dagre
+    version: 0.0.1
+    src: "htmlwidgets/lib/layout"
+    script: 'dagre.min.js'
+  - name: cytoscape-cola
+    version: 0.0.1
+    src: "htmlwidgets/lib/layout"
+    script: 'cytoscape-cola.js'
+  - name: cytoscape-cose-bilkent
+    version: 0.0.1
+    src: "htmlwidgets/lib/layout"
+    script: 'cytoscape-cose-bilkent.js'
+  - name: cytoscape-dagre
+    version: 0.0.1
+    src: "htmlwidgets/lib/layout"
+    script: 'cytoscape-dagre.js'
+  - name: cytoscape-spread
+    version: 0.0.1
+    src: "htmlwidgets/lib/layout"
+    script: 'cytoscape-spread.js'
