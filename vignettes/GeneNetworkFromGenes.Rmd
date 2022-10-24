@@ -13,6 +13,7 @@ output:
 library(GeneNetworkBuilder)
 library(knitr)
 library(STRINGdb)
+library(org.Hs.eg.db)
 ```
 
 # Using data from STRING 
@@ -20,6 +21,7 @@ If you only have RNAseq results, you may want to try if GeneNetworkBuilder could
 
 ```{r STRING}
 library(GeneNetworkBuilder)
+gR <- NULL
 try({ ## just in case STRINGdb not work
     library(STRINGdb)
     curr_version_table <- 
@@ -88,4 +90,19 @@ try({ ## just in case STRINGdb not work
     ## browse network
     browseNetwork(gR)
 })
+```
+
+### Subset the network by gene list
+
+If you are only interested in a subset of gene list such as genes involved in one gene ontology, you can subset the graph.
+
+```{r, subset}
+if(!is.null(gR)){
+  library(org.Hs.eg.db)
+  goGenes <- mget("GO:0002274", org.Hs.egGO2ALLEGS)[[1]]
+  goGenes <- unique(unlist(mget(unique(goGenes), org.Hs.egSYMBOL)))
+  goGenes <- goGenes[goGenes %in% nodes(gR)]
+  gRs <- subGraph(goGenes, gR)
+  browseNetwork(gRs)
+}
 ```

@@ -31,7 +31,8 @@ Suggests:
     STRINGdb,
     BiocStyle,
     magick,
-    rmarkdown
+    rmarkdown,
+    org.Hs.eg.db
 LinkingTo: Rcpp
 Description: Appliation for discovering direct or indirect targets of
     transcription factors using ChIP-chip or ChIP-seq, and
