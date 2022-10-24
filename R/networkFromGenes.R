@@ -4,9 +4,9 @@
 #' @param interactionmap Transcription regulatory map. 
 #'                       Column names of interactionmap must be 'from','to'
 #' @param level Depth of node path
-#' 
+#' @param unrooted Return unrooted regulatory network table or not.
 #' @return a list with elements:
-#'  rootgene: The nodes with maximal connetions.
+#'  rootgene: The nodes with maximal connections.
 #'  sifNetwork: Transcription regulatory network table.
 #' @keywords network
 #' @examples 
@@ -16,11 +16,13 @@
 #' xx<-networkFromGenes(example.data$ce.bind, ce.interactionmap, level=2)
 #' @export
 
-networkFromGenes <- function(genes, interactionmap, level=3){
+networkFromGenes <- function(genes, interactionmap, level=3, unrooted=FALSE){
   stopifnot(!missing(genes))
   checkMCName(interactionmap)
   if(level>0){
-    y<-interactionmap[interactionmap[ , "from"] %in% unique(as.character(genes)), 1:2,drop=F]
+    y<-interactionmap[interactionmap[ , "from"] %in%
+                        unique(as.character(genes)),
+                      1:2,drop=FALSE]
     TFbindingTable<-unique(y)
     level<-level-1
     if(level>0){
@@ -28,6 +30,9 @@ networkFromGenes <- function(genes, interactionmap, level=3){
       TFbindingTable<-rbind(TFbindingTable, y)
       TFbindingTable<-unique(TFbindingTable)
     }
+  }
+  if(unrooted){
+    return(list(rootgene=NULL, sifNetwork=TFbindingTable))
   }
   
   getParentNodes <- function(tfb, minParentNum){

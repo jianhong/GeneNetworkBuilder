@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.39.1
+-----------------------
+    o Add unrooted network.
+    
 CHANGES IN VERSION 1.37.2
 -----------------------
     o Add layout button for htmlwidgets

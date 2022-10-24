@@ -4,7 +4,7 @@
 \alias{networkFromGenes}
 \title{Build network by a list of given genes}
 \usage{
-networkFromGenes(genes, interactionmap, level = 3)
+networkFromGenes(genes, interactionmap, level = 3, unrooted = FALSE)
 }
 \arguments{
 \item{genes}{A vector of character for interested genes.}
@@ -13,10 +13,12 @@ networkFromGenes(genes, interactionmap, level = 3)
 Column names of interactionmap must be 'from','to'}
 
 \item{level}{Depth of node path}
+
+\item{unrooted}{Return unrooted regulatory network table or not.}
 }
 \value{
 a list with elements:
- rootgene: The nodes with maximal connetions.
+ rootgene: The nodes with maximal connections.
  sifNetwork: Transcription regulatory network table.
 }
 \description{

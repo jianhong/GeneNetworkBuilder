@@ -33,6 +33,7 @@ try({ ## just in case STRINGdb not work
     colnames(example1_mapped) <- c("gene", "P.Value", "logFC", "symbols")
     ## get significant up regulated genes.
     genes <- unique(example1_mapped$symbols[example1_mapped$P.Value<0.005 & example1_mapped$logFC>3])
+    ### rooted network, guess the root by connections
     x<-networkFromGenes(genes = genes, interactionmap=i, level=3)
     ## filter network
     ## unique expression data by symbols column
@@ -58,10 +59,32 @@ try({ ## just in case STRINGdb not work
     ## browse network
     browseNetwork(gR)
     
-    ## try predifined colors
+    ## try predefined colors
     cifNetwork$color <- sample(rainbow(7), nrow(cifNetwork), replace = TRUE)
     ## polish network
     gR<-polishNetwork(cifNetwork, nodecolor="color")
+    ## browse network
+    browseNetwork(gR)
+    
+    ### unrooted network, guess the root by connections
+    x<-networkFromGenes(genes = genes, interactionmap=i, unrooted=TRUE)
+    ## filter network
+    ## unique expression data by symbols column
+    expressionData <- uniqueExprsData(example1_mapped, 
+                                       method = 'Max', 
+                                       condenseName = "logFC")
+    ## merge binding table with expression data by symbols column
+    cifNetwork<-filterNetwork(sifNetwork=x$sifNetwork, 
+                              exprsData=expressionData, mergeBy="symbols",
+                              miRNAlist=character(0), 
+                              tolerance=1, cutoffPVal=0.001,
+                              cutoffLFC=1) # set minify=FALSE to retrieve all the interactions
+    ## convert the id to symbol
+    IDsMap <- expressionData$gene
+    names(IDsMap) <- expressionData$symbols
+    cifNetwork <- convertID(cifNetwork, IDsMap)
+    ## polish network
+    gR<-polishNetwork(cifNetwork)
     ## browse network
     browseNetwork(gR)
 })

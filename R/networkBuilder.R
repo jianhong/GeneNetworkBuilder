@@ -193,12 +193,45 @@ filterNetwork<-function(rootgene, sifNetwork, exprsData, mergeBy="symbols", miRN
         stop("miRNAtol is not a logical")
     }
     tolerance<-round(tolerance)
-    cifNetwork<-merge(sifNetwork, exprsData, by.x="to", by.y=mergeBy, all.x=TRUE)
+    cifNetwork<-merge(sifNetwork, exprsData,
+                      by.x="to", by.y=mergeBy, all.x=TRUE)
+    
+    if(missing(rootgene)){## unrooted
+      rootgene <- NA
+    }
+    if(is.na(rootgene) | is.null(rootgene)){## unrooted
+      ## create a fake rootgene
+      ## the fake rootgene will connect to all the genes with filtered conditions
+      rootgene <- "NANANA"
+      fakeroot <- TRUE
+      if(rootgene %in% c(cifNetwork$from, cifNetwork$to)){
+        rootgene <- make.names(c(cifNetwork$from, cifNetwork$to, rootgene))
+        rootgene <- rootgene[length(rootgene)]
+      }
+      rootlogFC <- cutoffLFC + 1
+      cifNetwork_filtered <- cifNetwork[!is.na(cifNetwork[, "logFC"]) &
+                                          !is.na(cifNetwork[, "P.Value"]),
+                                        , drop=FALSE]
+      cifNetwork_filtered <- cifNetwork_filtered[
+        abs(cifNetwork_filtered[, "logFC"])>=cutoffLFC &
+        cifNetwork_filtered[, "P.Value"]<=cutoffPVal,
+        , drop=FALSE]
+      cifNetwork_filtered <- 
+        cifNetwork[cifNetwork$to %in% cifNetwork_filtered$from, , drop=FALSE]
+      cifNetwork_filtered$from <- rootgene
+      cifNetwork_filtered <- unique(cifNetwork_filtered)
+      cifNetwork <- rbind(cifNetwork, cifNetwork_filtered)
+    }else{
+      fakeroot <- FALSE
+      rootlogFC<-exprsData[exprsData[ , mergeBy] == rootgene, "logFC"]
+      rootlogFC<-rootlogFC[!is.na(rootlogFC)]
+      rootlogFC<-ifelse(length(rootlogFC) < 1, 0.0, rootlogFC[1])
+    }
 ##   convert NA to 0 for logFC
     cifNetwork.logFC<-cifNetwork[,"logFC"]
     cifNetwork.logFC[is.na(cifNetwork.logFC)]<-0.0
     cifNetwork.pValue<-cifNetwork[,"P.Value"]
-    cifNetwork.pValue[is.na(cifNetwork.pValue)]<-0.0
+    cifNetwork.pValue[is.na(cifNetwork.pValue)]<-1.0
 ##   label microRNA
     cifNetwork$miRNA<-FALSE
     cifNetwork$dir<-2
@@ -210,12 +243,11 @@ filterNetwork<-function(rootgene, sifNetwork, exprsData, mergeBy="symbols", miRN
     }
 ##   remove micorRNA
     if(remove_miRNA){
-        cifNetwork<-cifNetwork[!cifNetwork$miRNA, ]
         cifNetwork.logFC<-cifNetwork.logFC[!cifNetwork$miRNA]
+        cifNetwork.pValue <- cifNetwork.pValue[!cifNetwork$miRNA]
+        cifNetwork<-cifNetwork[!cifNetwork$miRNA, ]
     }
-    rootlogFC<-exprsData[exprsData[ , mergeBy] == rootgene, "logFC"]
-    rootlogFC<-rootlogFC[!is.na(rootlogFC)]
-    rootlogFC<-ifelse(length(rootlogFC) < 1, 0.0, rootlogFC[1])
+    
     cifNetwork.list <- .Call("filterNodes",
                          as.character(cifNetwork$from), 
                          as.character(cifNetwork$to), 
@@ -242,7 +274,17 @@ filterNetwork<-function(rootgene, sifNetwork, exprsData, mergeBy="symbols", miRN
                                             },
                                            cifNetwork.list)
                             )
-    cifNetwork <- merge(cifNetwork, cifNetwork.list)
+    if(minify){
+      cifNetwork <- merge(cifNetwork, cifNetwork.list)
+    }else{
+      cifNetwork_s <- merge(cifNetwork, cifNetwork.list)
+      nodes <- unique(c(cifNetwork_s$from, cifNetwork_s$to))
+      cifNetwork <- cifNetwork[cifNetwork$from %in% nodes &
+                                 cifNetwork$to %in% nodes, , drop=FALSE]
+    }
+    if(fakeroot){
+      cifNetwork$from[cifNetwork$from==rootgene] <- NA
+    }
     cifNetwork
 }
 
@@ -310,6 +352,7 @@ polishNetwork<-function(cifNetwork,
   edge<-cifNetwork[cifNetwork$from!="" & cifNetwork$to!="", cname]
   node<-c(as.character(unlist(edge)))
   node<-node[!is.na(node)]
+  node<-node[node!=""]
   node<-unique(node)
   if(length(node) <= 1){
     stop("Can not built network for the inputs. Too less connections.")
@@ -335,13 +378,19 @@ polishNetwork<-function(cifNetwork,
   nodeDataDefaults(gR, attr="miRNA") <- FALSE
   for(i in node) {
     nodeData(gR, n=i, attr="label") <- i
-    nodeData(gR, n=i, attr="logFC") <- cifNetwork[match(i, cifNetwork$to), "logFC"]
-    nodeData(gR, n=i, attr="miRNA") <- cifNetwork[match(i, cifNetwork$to), "miRNA"]
+    nodeData(gR, n=i, attr="logFC") <-
+      cifNetwork[match(i, cifNetwork$to), "logFC"]
+    nodeData(gR, n=i, attr="miRNA") <-
+      cifNetwork[match(i, cifNetwork$to), "miRNA"]
   }
   ## set node size
   nodeDataDefaults(gR, attr="size")<-nodesDefaultSize
   for(i in unique(as.character(cifNetwork$from))){
-    nodeData(gR, n=i, attr="size")<-ceiling(5*length(edL[[i]]$edges)/length(node)) * nodesDefaultSize/2 + nodesDefaultSize
+    if(!is.na(i)){
+      nodeData(gR, n=i, attr="size")<-
+        ceiling(5*length(edL[[i]]$edges)/length(node)) *
+        nodesDefaultSize/2 + nodesDefaultSize
+    }
   }
   ## add additional message 
   additionalInfoCol <- colnames(cifNetwork)
