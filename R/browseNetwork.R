@@ -66,7 +66,7 @@ browseNetwork <- function(gR = graphNEL(),
     edges <- edges[sapply(edges, length)>0]
     edges.df <- mapply(function(target, source, id){
       weight <- 1
-      if(class(target)=="list"){
+      if(is.list(target)){
         weight <- target$weights
         target <- target$edges
       }
