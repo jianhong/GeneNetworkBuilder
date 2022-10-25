@@ -56,6 +56,12 @@ try({ ## just in case STRINGdb not work
     cifNetwork$info1 <- sample(c("groupA", "groupB"),
                                size = nrow(cifNetwork),
                                replace = TRUE)
+    cifNetwork$info2 <- sample(c(FALSE, TRUE),
+                               size = nrow(cifNetwork),
+                               replace = TRUE)
+    cifNetwork$info3 <- sample(seq.int(7),
+                               size = nrow(cifNetwork),
+                               replace = TRUE)
     ## polish network
     gR<-polishNetwork(cifNetwork)
     ## browse network
@@ -101,8 +107,7 @@ if(!is.null(gR)){
   library(org.Hs.eg.db)
   goGenes <- mget("GO:0002274", org.Hs.egGO2ALLEGS)[[1]]
   goGenes <- unique(unlist(mget(unique(goGenes), org.Hs.egSYMBOL)))
-  goGenes <- goGenes[goGenes %in% nodes(gR)]
-  gRs <- subGraph(goGenes, gR)
+  gRs <- subsetNetwork(gR, goGenes)
   browseNetwork(gRs)
 }
 ```

@@ -393,26 +393,34 @@ polishNetwork<-function(cifNetwork,
     }
   }
   ## add additional message 
-  additionalInfoCol <- colnames(cifNetwork)
-  additionalInfoCol <-
-    additionalInfoCol[!additionalInfoCol %in%
+  additionalInfoColAll <- colnames(cifNetwork)
+  additionalInfoColAll <-
+    additionalInfoColAll[!additionalInfoColAll %in%
                         c("to", "from", "gene", "P.Value", "logFC", "miRNA",
                           "dir")]
-  additionalInfoCol <- additionalInfoCol[
-    vapply(additionalInfoCol, FUN=function(.e){
-      inherits(cifNetwork[, .e], c("character", "factor")) &&
-        length(unique(cifNetwork[, .e])) > 1
-    }, FUN.VALUE=FALSE)
-  ]
-  if(length(additionalInfoCol)){
-    for(j in additionalInfoCol){
-      nodeDataDefaults(gR, attr=j)<-""
-      for(i in unique(as.character(cifNetwork$from))){
-        nodeData(gR, n=i, attr=j) <-
-          cifNetwork[match(i, cifNetwork$to), j]
+  addAdditionalInfo <- function(gR, types, defaultValue){
+    additionalInfoCol <- additionalInfoColAll[
+      vapply(additionalInfoColAll, FUN=function(.e){
+        inherits(cifNetwork[, .e], types) &&
+          length(unique(cifNetwork[, .e])) > 1
+      }, FUN.VALUE=FALSE)
+    ]
+    if(length(additionalInfoCol)){
+      for(j in additionalInfoCol){
+        nodeDataDefaults(gR, attr=j)<-defaultValue
+        for(i in unique(as.character(cifNetwork$from))){
+          nodeData(gR, n=i, attr=j) <-
+            cifNetwork[match(i, cifNetwork$to), j]
+        }
       }
     }
+    return(gR)
   }
+  ## additional characters
+  gR <- addAdditionalInfo(gR, c("character", "factor"), "")
+  ## additional numeric logical
+  gR <- addAdditionalInfo(gR, c("numeric", "logical"), NA)
+  
   ## set node color    
   nodeDataDefaults(gR, attr="fill")<-nodeBg
   if(!preDefinedColor){

@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.39.2
+-----------------------
+    o Add subsetNetwork function.
+    
 CHANGES IN VERSION 1.39.1
 -----------------------
     o Add unrooted network.

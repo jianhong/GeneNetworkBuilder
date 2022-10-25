@@ -107,6 +107,19 @@ test_polishNetwork<-function(){
     
     if(.Platform$OS.type != "windows"){
         xxxf<-filterNetwork(rootgene,xx,exprsData,"symbols",miRNAlist,miRNAtol=FALSE)
+        
+        xxxf$info1 <- sample(c("groupA", "groupB"),
+                             size = nrow(xxxf),
+                             replace = TRUE)
+        xxxf$info2 <- sample(c(FALSE, TRUE),
+                             size = nrow(xxxf),
+                             replace = TRUE)
+        xxxf$info3 <- sample(seq.int(7),
+                             size = nrow(xxxf),
+                             replace = TRUE)
+        xxxf$info4 <- factor(sample(LETTERS,
+                                    size = nrow(xxxf),
+                                    replace = TRUE))
         gR<-polishNetwork(xxxf)
         l<-RBGL::sp.between(gR,"A","E")
         checkEquals(l[[1]]$length,3)
