@@ -1,12 +1,12 @@
 Package: GeneNetworkBuilder
 Type: Package
-Version: 1.49.0
+Version: 1.49.1
 Title: GeneNetworkBuilder: a bioconductor package for building regulatory network using ChIP-chip/ChIP-seq data and Gene Expression Data
 Authors@R: c(person("Jianhong Ou", "Developer", role = c("aut", "cre"),
-        email = "jianhong.ou@duke.edu"), person("Lihua Julie Zhu",
+        email = "jou@morgridge.org"), person("Lihua Julie Zhu",
         "Developer", role = "aut", email = "Julie.Zhu@umassmed.edu"))
 Author: Jianhong Ou, Haibo Liu, Heidi A Tissenbaum and Lihua Julie Zhu
-Maintainer: Jianhong Ou <jianhong.ou@duke.edu>
+Maintainer: Jianhong Ou <jou@morgridge.org>
 Imports:
     plyr,
     graph,

@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.49.1
+-----------------------
+    o Update email address.
+
 CHANGES IN VERSION 1.47.4
 -----------------------
     o Add nodeData parameter to polishNetwork function.
