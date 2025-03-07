@@ -33,15 +33,15 @@ cy3Network <- function(gR = graphNEL(), ...,
                        stringify=FALSE, species = 'Homo sapiens',
                        style='Marquee', widths = c(0.25, 5)){
   stopifnot(is(gR, 'graphNEL'))
-  availableStyles <- getVisualStyleNames()
-  style <- match.arg(style, choices = availableStyles)
-  network <- createNetworkFromGraph(gR, ...)
   dots <- list(...)
   if('base.url' %in% names(dots)){
     base.url <- dots[["base.url"]]
   }else{
     base.url <- 'http://127.0.0.1:1234/v1'
   }
+  availableStyles <- getVisualStyleNames(base.url=base.url)
+  style <- match.arg(style, choices = availableStyles)
+  network <- createNetworkFromGraph(gR, ...)
   if(stringify){
     installedapps <- getInstalledApps(base.url = base.url)
     if(!grepl('stringApp', installedapps)){
