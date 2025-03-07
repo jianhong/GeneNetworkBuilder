@@ -13,7 +13,7 @@
 #' @importFrom RCy3 createNetworkFromGraph getVisualStyleNames setVisualStyle
 #' setNodeSizeMapping setNodeBorderColorBypass setNodeColorBypass 
 #' setEdgeLineWidthMapping commandsRun getNetworkSuid getTableColumns
-#' lockNodeDimensions
+#' lockNodeDimensions getInstalledApps
 #' @export
 #' @examples
 #' data("ce.miRNA.map")
@@ -36,24 +36,35 @@ cy3Network <- function(gR = graphNEL(), ...,
   availableStyles <- getVisualStyleNames()
   style <- match.arg(style, choices = availableStyles)
   network <- createNetworkFromGraph(gR, ...)
+  dots <- list(...)
+  if('base.url' %in% names(dots)){
+    base.url <- dots[["base.url"]]
+  }else{
+    base.url <- 'http://127.0.0.1:1234/v1'
+  }
   if(stringify){
+    installedapps <- getInstalledApps(base.url = base.url)
+    if(!grepl('stringApp', installedapps)){
+      warning('Please install STRING app first!')
+    }
     ## doc https://github.com/RBVI/stringApp/blob/master/doc_automation.md#compound-query
     string.cmd = paste0('string stringify column="name" networkNoGui="current" species="', species, '"')
-    commandsRun(string.cmd)
-    network <- getNetworkSuid()
+    commandsRun(string.cmd, base.url = base.url)
+    
+    network <- getNetworkSuid(base.url = base.url)
     stringstyle <- "STRING - From graph"
-    if(!stringstyle %in% getVisualStyleNames()){
+    if(!stringstyle %in% getVisualStyleNames(base.url = base.url)){
       stop('Default string style is not in list.',
            'Please select correct one from the output of getVisualStyleNames()')
     }else{
       style <- stringstyle
     }
   }else{
-    setVisualStyle(style, network = network)
-    lockNodeDimensions(TRUE, style.name = style)
-    setNodeSizeMapping('size', style.name = style, network = network)
+    setVisualStyle(style, network = network, base.url = base.url)
+    lockNodeDimensions(TRUE, style.name = style, base.url = base.url)
+    setNodeSizeMapping('size', style.name = style, network = network, base.url = base.url)
   }
-  nodeData <- getTableColumns(table = 'node', network = network)
+  nodeData <- getTableColumns(table = 'node', network = network, base.url = base.url)
   borderColor <- graph::nodeRenderInfo(gR, 'col')
   if(length(borderColor)>0){
     if(stringify){
@@ -64,7 +75,8 @@ cy3Network <- function(gR = graphNEL(), ...,
     borderColor[is.na(borderColor)] <- '#000000'
     setNodeBorderColorBypass(N[!is.na(N)], 
                              borderColor[!is.na(N)],
-                             network = network)
+                             network = network,
+                             base.url = base.url)
   }
   color <- graph::nodeRenderInfo(gR, 'fill')
   if(length(color)>0){
@@ -76,11 +88,13 @@ cy3Network <- function(gR = graphNEL(), ...,
     color[is.na(color)] <- '#FFFFFF'
     setNodeColorBypass(N[!is.na(N)],
                        new.colors=color[!is.na(N)],
-                       network = network)
+                       network = network,
+                       base.url = base.url)
   }
   setEdgeLineWidthMapping('weight',
                           style.name = style,
                           widths = widths,
-                          network = network)
+                          network = network,
+                          base.url = base.url)
   return(network)
 }
