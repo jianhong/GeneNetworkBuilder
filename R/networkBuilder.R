@@ -97,9 +97,9 @@ convertID<-function(x, IDsMap, ByName=c("from", "to")){
 buildNetwork<-function(TFbindingTable, interactionmap, level=3){
     checkMap(interactionmap, TFbindingTable)
     if(level>0){
-        y<-interactionmap[interactionmap[ , "from"] %in% unique(as.character(TFbindingTable[ , "to"])), ,drop=F]
+        y<-interactionmap[interactionmap[ , "from"] %in% unique(as.character(TFbindingTable[ , "to"])), ,drop=FALSE]
         y<-unique(y)
-        z<-y[!(y[,"to"] %in% TFbindingTable[,"to"]), , drop=F]
+        z<-y[!(y[,"to"] %in% TFbindingTable[,"to"]), , drop=FALSE]
         nrow1<-nrow(TFbindingTable)
         TFbindingTable<-rbind(TFbindingTable, y)
         TFbindingTable<-unique(TFbindingTable)

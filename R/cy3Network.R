@@ -10,10 +10,7 @@
 #' @param style The default style when create the network
 #' @param widths The link width range.
 #' @return The network SUID.
-#' @importFrom RCy3 createNetworkFromGraph getVisualStyleNames setVisualStyle
-#' setNodeSizeMapping setNodeBorderColorBypass setNodeColorBypass 
-#' setEdgeLineWidthMapping commandsRun getNetworkSuid getTableColumns
-#' lockNodeDimensions getInstalledApps
+#' @importFrom RCy3 createNetworkFromGraph getVisualStyleNames setVisualStyle setNodeSizeMapping setNodeBorderColorBypass setNodeColorBypass setEdgeLineWidthMapping commandsRun getNetworkSuid getTableColumns lockNodeDimensions getInstalledApps
 #' @export
 #' @examples
 #' data("ce.miRNA.map")

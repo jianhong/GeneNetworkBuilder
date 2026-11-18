@@ -147,7 +147,7 @@ cifNetwork<-convertID(cifNetwork, ce.mapIDs, ByName=c("from","to"))
 ##generate graphNEL object for the network
 gR<-polishNetwork(cifNetwork, nodecolor=colorRampPalette(c("green", "yellow", "red"))(10))
 ##plot the figure
-browseNetwork(gR)
+# browseNetwork(gR)
 ```
 ```{r}
 ## or plot by Rgraphviz
@@ -204,7 +204,7 @@ cifNetwork<-filterNetwork(rootgene=rootgene, sifNetwork=sifNetwork,
 cifNetwork<-convertID(cifNetwork, hs.mapIDs, ByName=c("from","to"))
 gR<-polishNetwork(cifNetwork)
 ##plot the figure
-browseNetwork(gR)
+# browseNetwork(gR)
 ## or plot by Rcyjs
 # library(RCyjs)
 # rcy <- RCyjs(portRange=9047:9067, title='sox2', graph=gR)

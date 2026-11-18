@@ -17,6 +17,7 @@
 #'         within R Markdown documents, and within Shiny output bindings.
 #' @export
 #' @importFrom methods is getPackageName
+#' @return An object of htmlwidget
 #' @examples 
 #' data("ce.miRNA.map")
 #' data("example.data")

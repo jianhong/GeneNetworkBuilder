@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.55.1
+-----------------------
+    o Fix the warning in BiocCheck.
+    
 CHANGES IN VERSION 1.49.2
 -----------------------
     o Add warning message if there is no stringApp installed.

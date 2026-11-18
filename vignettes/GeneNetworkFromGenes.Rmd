@@ -94,7 +94,7 @@ try({ ## just in case STRINGdb not work
     ## polish network
     gR<-polishNetwork(cifNetwork, edgeWeight = 'combined_score')
     ## browse network
-    browseNetwork(gR)
+    # browseNetwork(gR) # try it by yourself.
 })
 ```
 

@@ -17,6 +17,9 @@ Could be one of HTML, json or XGMML.}
 \item{...}{Parameter could be used by \link[htmlwidgets]{saveWidget} for HTML
 or writeLines for json or \link[XML]{saveXML} for XGMML.}
 }
+\value{
+invisible status in writing files for HTML, JSON or XGMML.
+}
 \description{
 Save graph into HTML, json or xgmml format.
 }

@@ -23,6 +23,7 @@
 #' network <- browseNetwork(gR)
 #' exportNetwork(network, "sample.html")
 #' @keywords IO
+#' @return invisible status in writing files for HTML, JSON or XGMML.
 exportNetwork <- function(network, file, 
                           format=c("HTML", "json", "XGMML"), ...){
   format <- match.arg(format)
@@ -43,7 +44,7 @@ exportNetwork <- function(network, file,
 #' @param ... Parameter could be used by saveXML
 #' @importFrom XML xmlNode append.xmlNode saveXML
 #' @keywords IO
-#' 
+#' @return The output of saveXML.
 saveXGMML <- function(network, file, ...){
   top <- xmlNode("graph", 
                  attrs=c("label"="GeneNetworkBuilder",

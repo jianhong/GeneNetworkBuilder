@@ -16,28 +16,36 @@ import(Rcpp)
 import(Rgraphviz)
 import(graph)
 import(htmlwidgets)
-importFrom(RCy3,commandsRun)
-importFrom(RCy3,createNetworkFromGraph)
-importFrom(RCy3,getInstalledApps)
-importFrom(RCy3,getNetworkSuid)
-importFrom(RCy3,getTableColumns)
-importFrom(RCy3,getVisualStyleNames)
-importFrom(RCy3,lockNodeDimensions)
-importFrom(RCy3,setEdgeLineWidthMapping)
-importFrom(RCy3,setNodeBorderColorBypass)
-importFrom(RCy3,setNodeColorBypass)
-importFrom(RCy3,setNodeSizeMapping)
-importFrom(RCy3,setVisualStyle)
-importFrom(XML,append.xmlNode)
-importFrom(XML,saveXML)
-importFrom(XML,xmlNode)
+importFrom(RCy3,
+  commandsRun,
+  createNetworkFromGraph,
+  getInstalledApps,
+  getNetworkSuid,
+  getTableColumns,
+  getVisualStyleNames,
+  lockNodeDimensions,
+  setEdgeLineWidthMapping,
+  setNodeBorderColorBypass,
+  setNodeColorBypass,
+  setNodeSizeMapping,
+  setVisualStyle
+)
+importFrom(XML,
+  append.xmlNode,
+  saveXML,
+  xmlNode
+)
 importFrom(grDevices,colorRampPalette)
 importFrom(graphics,symbols)
-importFrom(methods,getPackageName)
-importFrom(methods,is)
-importFrom(methods,new)
-importFrom(plyr,.)
-importFrom(plyr,ddply)
+importFrom(methods,
+  getPackageName,
+  is,
+  new
+)
+importFrom(plyr,
+  .,
+  ddply
+)
 importFrom(rjson,toJSON)
 importFrom(stats,median)
 useDynLib(GeneNetworkBuilder)

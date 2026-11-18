@@ -14,11 +14,14 @@ ChIP-seq, and the gene expression results, GeneNetworkBuilder
 generates a regulatory network of the TF.
 }
 \author{
-\strong{Maintainer}: Jianhong Ou Developer \email{jou@morgridge.org}
+\strong{Maintainer}: Jianhong Ou \email{jou@morgridge.org} (\href{https://orcid.org/0000-0002-8652-2488}{ORCID})
 
 Authors:
 \itemize{
-  \item Lihua Julie Zhu Developer \email{Julie.Zhu@umassmed.edu}
+  \item Jianhong Ou \email{jou@morgridge.org} (\href{https://orcid.org/0000-0002-8652-2488}{ORCID})
+  \item Haibo Liu
+  \item Heidi A Tissenbaum
+  \item Julie Lihua Zhu \email{Julie.Zhu@umassmed.edu}
 }
 
 }

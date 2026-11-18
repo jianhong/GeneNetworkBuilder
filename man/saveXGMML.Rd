@@ -13,6 +13,9 @@ saveXGMML(network, file, ...)
 
 \item{...}{Parameter could be used by saveXML}
 }
+\value{
+The output of saveXML.
+}
 \description{
 Save graph into xgmml format.
 }
