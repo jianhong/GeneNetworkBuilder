@@ -185,6 +185,7 @@ browseNetwork <- function(gR = graphNEL(),
 #' @name browseNetwork-shiny
 #'
 #' @export
+#' @return An output or render function that enables the use of the widget within Shiny applications.
 browseNetworkOutput <- function(outputId, width = '100%', height = '400px'){
   htmlwidgets::shinyWidgetOutput(outputId, 'browseNetwork', width, height, 
                                  package = 'GeneNetworkBuilder')
